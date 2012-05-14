@@ -8,16 +8,21 @@ body { padding-top: 60px; background: #ccc url(../images/bg.png); }
 .footer { padding: 20px; }
 .latest-projects { background:#eee; padding: 0 2% 2% 2%; }
 
-
 .sidebar { position: fixed; top: 40px; left: 73.468085099%; }
 .sub { padding-top: 20px; }
 
-.tweet { border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 5px; }
-.tweet:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
-
-
+/* projects */
 .project { margin-bottom: 5px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
 .project-description { padding-top: 10px; }
 .project-screenshot { border: solid 1px #ccc; opacity: 0.8; border-radius: 4px; }
 .project-screenshot:hover { opacity: 0.95; }
 .project-tags { font-size: .9em; font-style: oblique; margin-top: 5px; }
+
+/* tweets */
+.tweet { border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 5px; }
+.tweet:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+
+/* last-fm plays */
+.last-fm-plays { list-style: none; margin-left: 0; }
+.last-fm-play { border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 5px; }
+.last-fm-play:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
