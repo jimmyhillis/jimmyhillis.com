@@ -3,20 +3,26 @@
  * GET home page.
  */
 
-exports.index = function(req, res){
+function parseMarkdown(markdown_file) {
 
 	var fs = require('fs')
-	, markdown = require('markdown').markdown;
+		, markdown = require('markdown').markdown;
 
 	try {
-		var blog = fs.readFileSync(__dirname + '/../public/blog.md', 'ascii');
+		var markdown_str = fs.readFileSync(markdown_file, 'ascii');
 	} catch (err) {
 		console.log("Error loading the Blog file");
 	}
 
-	blog = markdown.toHTML(blog);
+	return markdown.toHTML(markdown_str);
 
-  res.render('index', { title: 'jimmy.hillis.me', blog: blog,  })
+}
+
+exports.index = function(req, res){
+	var content;
+	
+	content = parseMarkdown(__dirname + '/../public/content/index.md');
+  res.render('index', { title: 'jimmy.hillis.me', blog: content })
 };
 
 exports.lab = function(req, res){
@@ -28,7 +34,10 @@ exports.folio = function(req, res){
 }
 
 exports.contact = function(req, res){
-	res.render('contact', { title: 'Contact', dirname: __dirname })
+	var content;
+	
+	content = parseMarkdown(__dirname + '/../public/content/contact.md');
+	res.render('contact', { title: 'Contact', content: content })
 };
 
 exports.lastfm_feed = function (req, res){
