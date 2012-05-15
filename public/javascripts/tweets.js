@@ -221,6 +221,6 @@ var loadJSONP = (function() {
 	}
 
 	// Load LAST.FM RECENT TRACKS LIST
-	loadJSONP("http://127.0.0.1:3000/last-fm", appendPlays);
+	loadJSONP("/last-fm", appendPlays);
 
 }());
