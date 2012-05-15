@@ -28,7 +28,6 @@ I had a minor problem with nodejs not finding openssl (due to missing the pkg-co
 
 Voila! v8, nodejs, and npm all installed and ready for action.
 
-
 ## Setting up Last.fm Feed with 
 
 I wanted to pull my Last.fm recently played list directly from the Last.FM API and display it as an aside on this site. To do this I wanted to use a nodejs package, if possible. Luckily there is a simple one that was created a few years back I found on NPM and [github](https://github.com/jammus/lastfm-node)
@@ -160,3 +159,133 @@ A few things I really like is the simple way of chaining class and id properties
 Is very short and simple and straight to the point. 
 
 Having no need to closing tags (though you can manually close them yourself if you want) is a boon as well, saving a huge amount of time and effort. Using tabs and returns also forces the templater to write nicely formatting code.
+
+## Apr/5th
+
+I made some changes to the TWEETS application I've been working on to get it cacheing for a little imrpvoed speed. I intended to use localStorage (keeping with my JS only! guideline) to track my feed any time you reloaded a page -- at least for a time.
+
+The process of using localStorage is a simple 2 part process:
+
+1. Before I contact the Twitter API check if I have a cached version already (and if it's recent *enough* to be valid)
+2. When I get a response from the Twitter API store it in locaLStorage for the next page load.
+
+Pretty simple goals so to implement it I first had to rearrange the way the JSONP callback was working. Currently it simlpy calls the user provided callback with the response from Twitter. I needed something in middle to cache that response in a way that was useful to the TWEETS application. I ended up creating a new function called 
+
+	passTweetsToCallback()
+
+This private method takes the response from Twitter and does a few things. Firstly I add a timestamp to the response so that next time I load a page I know how old they are, don't wait to keep a single cache for weeks do we?
+
+After that I simply stringify the response and throw it into localStorage.
+
+	localStorage.setItem('TWEETS', JSON.stringify(cachedTweets));
+
+I should have a better naming convention to allow for multiple feeds but for now there is no functionality to support that. It could be done as simply as appending the username to the localStorage variable but I think storing multiple feeds within an array within the single TWEETS has more legs -- less crowding of the localStorage keys pace.
+
+After that I call the callback function with the response tweets. To do this my call back needed access to that function which is provided to getTweets. I don't have direct access so I set the call back as a hidden variale userCallback which is accessible throughout my application.
+
+To check if this exists I run a few simple test. Check if the localStorage key for TWEETS exists and then make sure it's recent enough. I've used 3 hours as my base point as it's pretty reasonably to see a few tweets wthin a few hours, but shouldn't cause any damage if they aren't shown immediatley.
+
+To do this I used the built in JavaScript data functions to build a new date and remove 3 hours from it. If the cache time is less than 3 hours old we can use the cache.
+
+	var refreshCacheTime = new Date();
+	refreshCacheTime.setHours(refreshCacheTime.getHours() - 3);
+	if (cachedTweets.cachetime >= refreshCacheTime) {
+		/* Great! Let's use the cache */
+	}
+
+These simple changes have increase the speed and decreased the depndencies on a third party greatly across a single session on any site that needs to hit Twitter. I've written this same functionality in PHP and stored it in a file but I like the simplicity and async nature of doing this with JavaScript.
+
+## 20/Mar
+
+localStorage was the main purpose of the code I was working on today. One of my biggest goals with this project was to creates a persistent database for each user through user side code. I needed a way to store each users data on their own machine without them knowing/doing anything.
+
+Most modern browsers have support for localStorage which is simply a key/value based storage system that allows you to store 4mb worth of data. All data is stored as a string, no matter what.
+
+I needed to store arrays of objects. To do this I needed only look at the JSON library for the following functions
+
+	strngify()
+	parseJSON()
+
+With these two functions you are able to take any JSON (e.g. A JavaScript Object) and turn it into a string. ParsesJSON does the opposite.
+
+Getting an array of object into localStorage was as trivial as:
+
+	window.localStorage(comics.stringfy)));
+
+To get the data out wasn't quite so easy. The main reason for that was simple. The parseJSON function returns an object but it doesn't return the methods, and therefore prototype/constructor of the Object that it was created from. As a simple solution I pulled each Object out of the array and through the data into my constructor function on each page load.
+
+%%
+
+## 23/Mar
+
+Today's progress entailed a few simple additions to the code in hopes of getting through jsLint. This proved more difficult than I'd hoped or expected so I left the code with a few errors remaining. This was, for now, due to the cryptic nature of some of the errors which I was unable to process at the hour I ran through them.
+
+## 24/Mar
+
+I was able to write some more API functions for the app this morning as well as write a starting document to go with it. I've never used the Markdown style scripting text files that GitHub uses so I learned a few new tricks there. Most importantly how to style text with some very basic markdown. ## represents a title and any per tabbed content becomes code. Simple. Got all of the public functions commented within matching code on the site and README. Hopefully I will keep the updated and matching!
+
+## 25/Mar
+
+Today say me make a few larger feature changes in hopes of increasing the scope of the project. Most importantly I managed to write a nice method for sorting and displaying the issues collected within a given series. I wanted to make sure this formatting was as small and useful as possible. In the past I've found many sites list them 1, 2, 3 etc. A verbose and unnecessary way. I wanted to break them down into sequences where possible. 1-3, 5, 7-9 which I have done. This is through a looping method which moves through each issue. Within that issue is checks to see if it belongs in a sequence and builds a string based on that feature. Was harder than anticipated, due to the backwards movement of JS looping (done for efficiency).
+
+I also started the process of incorporating a JS templating system for quicker, and nicer, markup from my App. I picked up and used Handlebars.js which is a very simple library for templating. It uses similar notation to Smarty with its {{}} notation and has a simple set of methods for compiling templates and providing data. It allows for basic looping and string replacement out of the box and plenty of room to build your own functions, none of which I've needed as yet. Currently the Templates are thrown into the App code however this will obviously need to be removed to keep any resemblance to a MVC structure in the coming days.
+
+## 27/Mar
+
+While I was finishing up some of the front end work on the app yesterday I wanted to incorporate my twitter feed into a footer section. Didn't want anything too fancy. Just a simple text feed (maybe some links) and nothing more. Obviously wantd to do an asynchronous JS setup to keep inline with the whole project. Seemed simple enough.
+
+Unfortunately the Twitter provided stuff requires special markup and creates a lot of bloated HTML code to build a feed. After a quick look on GitHub without much luck I decided to build my own. I've done so in PHP before so this would be easy.
+
+Basically up need to build a REST api call through a standard URL with a query string. It basically looks like:
+
+	Api.twitter.com/xxxx.json?name=ppjim3
+
+Now the problem at hand is that you can't use JS to make an Ajax call to a different server due to security restrictions (....). The solution is to use JSONP which allows you to circumvent this restriction by adding a new <script> tag which calls a global function (or sorts) on return with the Object wrapped inside. You basically get something like this in return.
+
+	callback({ data: [{ tweet},{tweet},...])
+
+Which calls a local function passing the data which you can use. Most JS frameworks have a JSONP function built in as there is no default support for it. I used a little gist %% which made a simple JSONP call with a callback function. I built a basic JS function called tweet.js which you can find on GitHub.
+
+Fundamentally you create an object called TWTR and can call buildFeed(username, contentElement) which will build a simple HTML markup of the tweets. Alternatively you can pass a callback function which will be provided an array of Tweets using getTweets(username, callback).
+
+## 30/Mar
+
+My main goal today was to allow users to input issues in a sequence format smilar to the way I list comics. An example of this sequence would be
+
+	1,3-5,8
+
+This would add issues 1,3,4,5,8 into the database for a specific series which would increase the speed and usability for users.
+
+To do this I ran a few string comparisons and regular expression for validating the input as well as to pull out the required information. I'm not particularly good at regular expressions (have attempted to teach myself on and off for years always forgetting bits and re-learning them as I go).
+
+The basic process I'm using is to break the string down into relevant sequences and then acting upon them. First of all I validate the input to confirm there are no rogue characters. My acceptable character range is all numbers, commas, and hyphens. So a quick regex will validate that:
+
+	/(^[1-9]\,\-)+/
+
+That simple regular expression will return false if there are any non acceptable characters in the string. Simple starting point.
+
+Next I split the string into valid blocks on the comma character so we can go through each single issue or sequence on its own. Using the above example:
+
+	"1,3-5,8".split(',') // returns ["1","3-5","8"]
+
+Great! Now we need to go through each new string and break it down further. If the string is a single number (has no hyphen) simply add that issue into the database as is. The harder case is when there is a hypen and we have a sequence! Okay let's split on that.
+
+	"3-5".split('-') // ["3","5"]
+
+Now we know what we're doing. Just a simple for loop that runs from the low number to the high number adding in all the issues inbetween.
+
+	for (low; low <= high; low++)
+		addComic(series, low)
+
+That's the logic behind how I've got the sequencer working. There are a few other gotchas to be aware of though:
+
+* Make sure the sequences are low to high, must order the array before doing the sequence slit.
+* what if there is more than 1 hyphen in the sequence? Probably should throw it away however if you split the same after ordering and use the first and last element you will still get a valid entry, based on a correct if strange input.
+* you could likely use a single regex to run through and parse the entire string for both elements however I find it a lot simpler and logical to break it down into 2 sub problems, even with the compounded loops.
+
+## 31/March
+
+Working on some minor changes today including:
+
+* Made sure the comic search helper (for adding new comics) was case insensitive so you don't have to be so exact!
+* added in some iconography using some OTF web fonts. A new and nice way to insure good support and easy management.
