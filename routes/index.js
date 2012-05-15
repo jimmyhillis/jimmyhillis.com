@@ -26,7 +26,10 @@ exports.index = function(req, res){
 };
 
 exports.lab = function(req, res){
-	res.render('lab', { title: 'Lab' })
+	var content;
+	
+	content = parseMarkdown(__dirname + '/../public/content/lab.md');
+	res.render('lab', { title: 'Lab', content: content })
 };
 
 exports.folio = function(req, res){
@@ -80,7 +83,6 @@ exports.lastfm_feed = function (req, res){
 			error: function(error) {
 				console.log("Error: " + error.message);
 				res.send('Error');
-				//res.send(req.param('callback') + "(['Failed to load stream'])");
 			}
     }
 	});

@@ -1,4 +1,8 @@
-h1.content= title
-div#copy.content
-	p Welcome to #{title}
-	p I've never uesd Jade but it looks simple enough
+div.page-header
+	h1 
+		#{title} 
+
+div.row-fluid
+
+	div.span8
+		!{content}
