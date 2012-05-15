@@ -36,6 +36,6 @@ app.get('/lab', routes.lab);
 app.get('/contact', routes.contact);
 app.get('/last-fm', routes.lastfm_feed);
 
-app.listen(3000, function(){
+app.listen(80, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
