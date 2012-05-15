@@ -11,6 +11,9 @@ body { padding-top: 60px; background: #ccc url(../images/bg.png); }
 .sidebar { position: fixed; top: 40px; left: 73.468085099%; }
 .sub { padding-top: 20px; }
 
+/* contact */
+.avatar { width: 100%; border-radius: 4px; }
+
 /* projects */
 .project { margin-bottom: 5px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
 .project-description { padding-top: 10px; }
