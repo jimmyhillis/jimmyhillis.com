@@ -60,15 +60,22 @@ exports.lastfm_feed = function (req, res){
 
 				var recent_tracks = data.recenttracks.track
 					, track
-					, track_strings = [];
+					, track_strings = []
+					, content = "";
 
 				for (var i = recent_tracks.length - 1; i >= 0; i--) {
 					track = recent_tracks[i];
 					track_strings.push(track.artist['#text'] + ' - ' + track.name);
 				};
 
-				res.send(req.param('callback') + "(" + JSON.stringify(track_strings) + ")");
+				/* Create JSON response */
+				content = JSON.stringify(track_strings);
 
+				if (req.param('callback')) {
+					content = req.param('callback') + "(" + content + ")"; 
+				}
+
+				res.send(content);
 			},
 			error: function(error) {
 				console.log("Error: " + error.message);
