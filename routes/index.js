@@ -1,9 +1,34 @@
 
-/*
- * GET home page.
+/* 
+ * Load required Routes for the site
  */
 
-function parseMarkdown(markdown_file) {
+exports.index = function(req, res){
+	var content;
+	
+	content = _parseMarkdown(__dirname + '/../public/content/index.md');
+  res.render('index', { title: 'jimmy.hillis.me', blog: content })
+};
+
+exports.lab = function(req, res){
+	var content;
+	
+	content = _parseMarkdown(__dirname + '/../public/content/lab.md');
+	res.render('lab', { title: 'Lab', content: content })
+};
+
+exports.folio = function(req, res){
+	res.render('folio', { title: 'Web folio' })
+}
+
+exports.contact = function(req, res){
+	var content;
+	
+	content = _parseMarkdown(__dirname + '/../public/content/contact.md');
+	res.render('contact', { title: 'Contact', content: content })
+};
+
+function _parseMarkdown(markdown_file) {
 
 	var fs = require('fs')
 		, markdown = require('markdown').markdown;
@@ -15,76 +40,5 @@ function parseMarkdown(markdown_file) {
 	}
 
 	return markdown.toHTML(markdown_str);
-
-}
-
-exports.index = function(req, res){
-	var content;
-	
-	content = parseMarkdown(__dirname + '/../public/content/index.md');
-  res.render('index', { title: 'jimmy.hillis.me', blog: content })
-};
-
-exports.lab = function(req, res){
-	var content;
-	
-	content = parseMarkdown(__dirname + '/../public/content/lab.md');
-	res.render('lab', { title: 'Lab', content: content })
-};
-
-exports.folio = function(req, res){
-	res.render('folio', { title: 'Web folio' })
-}
-
-exports.contact = function(req, res){
-	var content;
-	
-	content = parseMarkdown(__dirname + '/../public/content/contact.md');
-	res.render('contact', { title: 'Contact', content: content })
-};
-
-exports.lastfm_feed = function (req, res){
-
-	var LastFmNode = require('lastfm').LastFmNode
-		, recent_tracks
-		, lastfm = new LastFmNode({
-	  		api_key: 'c005da8fa06f6eb6e7adadbc477eb0d0',    // sign-up for a key at http://www.last.fm/api
-	  		secret: '43b15add6b231357c5381ff1f5df4417',
-	  		useragent: 'jimmy.hillis.me/v0.1' // optional. defaults to lastfm-node.
-			});
-
-	res.contentType('json');
-
-	recent_tracks = lastfm.request('user.getRecentTracks', { 
-		user: 'ppjim3', 
-		limit: 10, 
-		handlers: {
-			success: function(data) {
-
-				var recent_tracks = data.recenttracks.track
-					, track
-					, track_strings = []
-					, content = "";
-
-				for (var i = recent_tracks.length - 1; i >= 0; i--) {
-					track = recent_tracks[i];
-					track_strings.push(track.artist['#text'] + ' - ' + track.name);
-				};
-
-				/* Create JSON response */
-				content = JSON.stringify(track_strings);
-
-				if (req.param('callback')) {
-					content = req.param('callback') + "(" + content + ")"; 
-				}
-
-				res.send(content);
-			},
-			error: function(error) {
-				console.log("Error: " + error.message);
-				res.send('Error');
-			}
-    }
-	});
 
 }
