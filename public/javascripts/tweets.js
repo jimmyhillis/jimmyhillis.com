@@ -185,7 +185,7 @@ var loadJSONP = (function() {
 				tweets[i].text = tweets[i].text.replace(url, real_url);
 			}
 
-			tweet = '<div class="tweet">' + tweets[i].text + '</div>';
+			tweet = '<div class="tweet well">' + tweets[i].text + '</div>';
 			tweet_feed.append($(tweet));
 
 		}
@@ -193,34 +193,5 @@ var loadJSONP = (function() {
 	}
 
 	TWEETS.getTweets("ppjim3", 5, appendTweets);
-
-
-
-
-	// LAST.FM RECENTLY PLAYED LIST
-
-	var appendPlays = function appendPlays(plays) {
-
-		var $lastfm_feed = $('.last-fm-feed')
-			, $plays_list = $('<ul></ul>').addClass('last-fm-plays') // the list of plays you can append to your HTML
-			, $play // a specific play li element
-			, i // the iterator for the for loop
-		;
-
-		if (plays.length) {
-
-			for (i = plays.length - 1; i > 0; i--) {
-				$play = $('<li></li>').addClass('last-fm-play').text(plays[i]);
-				$plays_list.append($play);
-			}
-
-			$lastfm_feed.append($plays_list);
-
-		}
-
-	}
-
-	// Load LAST.FM RECENT TRACKS LIST
-	loadJSONP("/last-fm", appendPlays);
 
 }());
