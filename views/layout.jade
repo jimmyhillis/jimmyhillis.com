@@ -35,39 +35,85 @@ html.no-js(lang='en')
     
     div.container-fluid
       div.row-fluid
+       
         div.content.copy.span9!=body
+
         div.sidebar.span3
-          aside.sub.twitter
-            h3 Twitter 
-              small @ppjim3
-            .twitter-feed My twitter feed will go here
-            //- a.btn.btn-small(href='//twitter.com/#!ppjim3')
-              i.icon-music
-              View Profile
-          aside.sub.last-fm
-            h3 Last.fm
-            .last-fm-feed 
-              p My most recent plays, feel free to look and become a friend to compare music. Mostly move between indie, electronica, and hardcore music.
-            //- a.btn.btn-small(href='//last.fm/user/ppjim3') 
-              i.icon-music 
-              View Profile
-          //-aside.sub.goodreads
-            h3 Goodreads Is Here!
-            .goodreads-feed What I'm currently reading
-            //- a.btn.btn-small(href='//www.goodreads.com/user/show/5464248-jimmy-hillis') 
-              i.icon-music 
-              View Profile
+          div.tabable
 
-    .footer
-      :markdown
-        This website was created by Jimmy Hillis using open source software. [node.js](//nodejs.org), [express](//expressjs.com/), [less](//lesscss.org) : You can se it all on [github](//github.com/jimmyhillis/jimmy.hillis.me)
+            ul.nav.nav-pills
+              li.active
+                a(href='#twitter-feed', data-toggle="tab") Twitter
+              li
+                a(href='#instagram-feed', data-toggle="tab") Instagram
+              li
+                a(href='#last-fm-feed', data-toggle="tab") Last.fm
 
+            div.tab-content
+
+              aside.tab-pane.active.twitter#twitter-feed
+                h3 Twitter 
+                p
+                  a.btn.btn-mini.btn(href="//twitter.com/ppjim3") view profile 
+                  small  @ppjim3
+                .twitter-feed My twitter feed will go here
+
+              aside.tab-pane.instagram#instagram-feed
+                h3 Instagram
+                .instagram-feed
+                  p My *hipster* photostream.
+
+
+              aside.tab-pane.last-fm#last-fm-feed
+                h3 Last.fm 
+                p
+                  a.btn.btn-mini.btn(href="//last.fm/user/ppjim3") view profile
+                .last-fm-feed
+                  p My most recent plays, feel free to look and become a friend to compare music. Mostly move between indie, electronica, and hardcore music.
+                //- a.btn.btn-small(href='//last.fm/user/ppjim3') 
+                  i.icon-music 
+                  View Profile
+              //-aside.tab-pane.goodreads
+                h3 Goodreads Is Here!
+                .goodreads-feed What I'm currently reading
+                //- a.btn.btn-small(href='//www.goodreads.com/user/show/5464248-jimmy-hillis') 
+                  i.icon-music 
+                  View Profile
+      
+      div.row-fluid
+
+        .footer.span9
+
+          div.row-fluid
+
+            div.span4.colophon.well
+              :markdown
+                This website was created by Jimmy Hillis using open source software. [node.js](//nodejs.org), [express](//expressjs.com/), [less](//lesscss.org). You can see it all on [github](//github.com/jimmyhillis/jimmy.hillis.me) too.
+  
+            div.span4.footer-block.projects.well
+              ul.nav.nav-list
+                li.nav-header Projects / Code
+                li
+                  a(href="//github.com/jimmyhillis") GitHub
+                li
+                  a(href="/lab/comicbox.js") comicbox.js
+
+            div.span4.footer-block.social-media.well
+                ul.nav.nav-list
+                  li.nav-header Social Media
+                  li
+                    a(href="//twitter.com/ppjim3") Twitter
+                  li
+                    a(href="//twitter.com/ppjim3") Last.fm
+                  li
+                    a(href="//www.goodreads.com/user/show/5464248-jimmy-hillis") GoodReads
 
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
     script
       window.jQuery || document.write('<script src="javascripts/libs/jquery-1.7.2.min.js"><\\/script>')
     script(src='javascripts/bootstrap.min.js')
     script(src='javascripts/tweets.js')
+    script(src='javascripts/ui.js')
     script
       var _gaq=[['_setAccount','UA-31741846-1'],['_trackPageview']];
       (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

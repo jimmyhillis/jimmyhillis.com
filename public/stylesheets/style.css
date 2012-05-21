@@ -2,14 +2,24 @@ body { padding-top: 60px; background: #ccc url(../images/bg.png); }
 
 /* Typographic elements */
 .inset {text-shadow: 0px 2px 3px #444; }
+.center { text-align: center; }
 
 /* Components */
-.content { background: #fff; padding: 0 2% 15px; border-radius: 4px; }
-.footer { padding: 20px; }
-.latest-projects { background:#eee; padding: 0 2% 2% 2%; }
 
-.sidebar { position: fixed; top: 40px; left: 73.468085099%; }
-.sub { padding-top: 20px; }
+.navbar-inner { background: #08C; box-shadow: none; }
+.navbar-inner .nav > li > a { color: #eee; }
+.navbar-inner .nav > li > a:hover { color: #fff; border-bottom: solid 2px #fff; padding-bottom: 10px; }
+
+.content { background: #fff; padding: 0 2% 15px; border-radius: 4px; }
+
+.footer { margin: 10px 0; }
+	.footer-block { background: #ddd; }
+	.footer-block .nav { min-height: 100px; }
+	.footer-block > * { text-shadow: none; }
+	.colophon { text-align: center; background: #333; color: #bbb; padding: 28px 15px; }
+		.colophon a { color: #fff; }
+
+.latest-projects { background:#eee; padding: 0 2% 2% 2%; }
 
 /* contact */
 .avatar { width: 100%; border-radius: 4px; }
@@ -21,11 +31,31 @@ body { padding-top: 60px; background: #ccc url(../images/bg.png); }
 .project-screenshot:hover { opacity: 0.95; }
 .project-tags { font-size: .9em; font-style: oblique; margin-top: 5px; }
 
+/* sidebar */
+
+.sidebar-fixed { 
+	position: fixed; 
+	top: 40px; 
+	left: 73.468085099%;
+}
+.sub { padding-top: 20px; }
+.sidebar .nav {
+	margin-bottom: 5px;
+}
+.sidebar h3 {
+	margin-bottom: 5px;
+}
+
+/* instagram */
+.instagram-photos { list-style: none; margin-left: 0; }
+	.instagram-photo { width: 30%; float: left; margin: 0 3% 3% 0; }
+
 /* tweets */
-.tweet { border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 5px; }
-.tweet:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+.tweet { border-bottom: 1px solid #ccc; margin-bottom: 5px; padding: 10px; }
+	.tweet:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
 
 /* last-fm plays */
 .last-fm-plays { list-style: none; margin-left: 0; }
-.last-fm-play { border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 5px; }
-.last-fm-play:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+	.last-fm-play { border-bottom: 1px solid #ccc; margin-bottom: 5px; padding: 10px; min-height: none; }
+
+
