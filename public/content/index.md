@@ -1,6 +1,46 @@
-## I'm not a server guy.. normally!
+## Cache JSON responses from external APIs
 
-A abstract Model class for a CMS and PHP MVC framework
+I decided to write a really simple file-cache for my feed's just to check out the FS functionality within nodejs. My plan was simple: check if there is a cache file (which isn't too old) and use it. If there isn't one hit the third party and pull down the information I need. Cache it to a flat file. Use it. **Easy!**
+
+To use the nodejs file system functionalit you pull it in as per usual:
+
+	var fs = require('fs')
+
+Once you've got access to it you have a wealth of system level functionality built in. I decided to do everything with the FS in non-block asyc mode which complicates things slightly, but is in line with the nodejs principals.
+
+	fs.stat(cache_path, function(err, stat) {
+
+		// The file exists so we can compare 
+		// when it was last updated
+		if (!err) {	
+			cache_time = stat.mtime;
+			if ((now_time.getTime() - cache_time.getTime()) 
+				> res.app.settings['external_cache_time']) {
+					cache_overdue = true;
+			}
+		}
+
+		if (!err && !cache_overdue) {
+			// Read the cache file to extract the response data
+			fs.readFile(cache_path, 'ascii', function(err, data) {
+				// do what you need to do with the data!
+				// do some more error checking too!
+			});
+		}
+	});
+
+While it looks a little long-winded it's extremely simple code to follow. We check if the file exists by running a stat. If the file exists we then check if it's *too old* (which is a system level setting). If it's not too old we open the file and use the cache version. 
+
+Obviously if it's not there or it's overdue then you make a API call as per normal. The only difference is to save the file to the cache when you get a response:
+	
+	// Cache the file for future use
+	fs.writeFile(cache_path, data, function() {
+		console.log('Instagram cache saved!');
+	});
+	
+I'm going to convert all of this to a MongoDB in the next few days but for now it was a good test to see how easily you could deal with files using nodejs. You can see the full list of [fs functionality](nodejs.org/api/fs.html) on the [nodejs docs](http://nodejs.org/api/).
+
+## I'm not a server guy.. normally!
 
 The first time I used any unix OS was in university. I was a massive fan of the terminal throughout my 4 years of study. After I graduated I got a Mac, started developing websites and never truly found my love of unix again.
 
