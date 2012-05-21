@@ -39,6 +39,9 @@ app.configure('production', function(){
 app.get('/', routes.index);
 app.get('/lab', routes.lab);
 app.get('/contact', routes.contact);
+
+// Feed routs
+app.get('/instagram', feeds.instagram_feed);
 app.get('/last-fm', feeds.lastfm_feed);
 
 app.listen(3000, function(){

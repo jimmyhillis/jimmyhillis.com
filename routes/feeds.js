@@ -1,16 +1,96 @@
 /*
  * GET twitter recent feed list
  */
-exports.twitter_feed = function (req, res){
+exports.twitter_feed = function (req, res) {
 
 	var fs = require('fs');
-
+	
 }
+/* GET instagram latest photos 
+ */
+exports.instagram_feed = function (req, res) {
 
+	var Instagram = require('instagram-node-lib')
+		, fs = require('fs')
+		, cache_path = res.app.settings['static'] + '/cache/instagram.json';		
+
+	Instagram.set('client_id', "76fdd68757a74e76bdafaf69ea4d7e79");
+	Instagram.set('client_secret', "19aaee33c26e4382a99a7b556c0474fd");
+	Instagram.set('access_token', "29667524.76fdd68.22c97f05f88f4af6adb3b81482fcd6f9");
+
+	res.contentType('json');
+
+	/* We'll do some simple file caching here by checking
+	 * for a cache file and loading the JSON if it's not too old.
+	 * Load the details about the cache file so we can
+	 * run some tests on how old it is. */
+	fs.stat(cache_path, function(err, stat) {
+
+		var cache_time
+			, now_time = new Date()
+			, cache_overdue = false;
+
+		/* Work out if the cache is overdue, currently set to 10 minutes.
+		 * @TODO turn this into a system wide variables  */
+		if (!err) {	
+			cache_time = stat.mtime;
+			if ((now_time.getTime() - cache_time.getTime()) > res.app.settings['external_cache_time']) {
+				cache_overdue = true;
+			}
+		}
+
+		if (!err && !cache_overdue) {
+
+			console.log('Instagram cache available.');
+
+			fs.readFile(cache_path, 'ascii', function(err, data) {
+
+				/* Looks like the cache was broken somehow, better do something.. */
+				if (err) {
+					console.log('The Instagram cache will not open.');
+					throw err;
+				}
+
+				if (req.param('callback')) {
+					data = req.param('callback') + "(" + data + ")"; 
+				}
+
+				res.send(data);
+
+			});
+		
+		}
+		/* There is no cache, or it's over due */
+		else {
+
+			Instagram.users.recent({ 
+				user_id: 29667524, 
+				'complete': function(data) {
+
+					data = JSON.stringify(data);
+
+					/* Cache the data in async, move on anyway! */
+					fs.writeFile(cache_path, data, function() {
+						console.log('Instagram cache saved!');
+					});
+
+					if (req.param('callback')) {
+						data = req.param('callback') + "(" + data + ")"; 
+					}
+
+					res.send(data);
+					
+				} 
+			});
+
+		}
+	});
+	
+}
 /*
  * GET last.fm recent tracks list
  */
-exports.lastfm_feed = function (req, res){
+exports.lastfm_feed = function (req, res) {
 
 	var fs = require('fs');
 
@@ -45,6 +125,8 @@ exports.lastfm_feed = function (req, res){
 		}
 
 		if (!err && !cache_overdue) {
+
+			console.log('Last-fm cache available.');
 
 			if (!cache_overdue && fs.readFile(cache_path, 'ascii', function(err, data) {
 
@@ -86,7 +168,7 @@ exports.lastfm_feed = function (req, res){
 
 						/* Cache the data in async, move on anyway! */
 						fs.writeFile(cache_path, content, function() {
-							console.log('Cache saved!');
+							console.log('Last.fm cache saved!');
 						})
 
 						if (req.param('callback')) {
