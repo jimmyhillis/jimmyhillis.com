@@ -5,11 +5,13 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , feeds = require('./routes/feeds');
+  , feeds = require('./routes/feeds')
+  , mongoose = require('mongoose');
 
 var app = module.exports = express.createServer();
 
-// Configuration
+
+// == CONFIG == //
 
 app.configure(function(){
   
@@ -34,13 +36,33 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-// Routes
+// == DATABASE == //
 
+mongoose.connect('mongodb://localhost/jimmy-hillis-me', function(err) {
+  if (err) {
+    console.log("Failed to connect to MongoDB");
+  }
+});
+// Log success cases for testing purposes
+mongoose.connection.on("open", function() {
+  console.log("mongodb is connected");
+});
+
+// Define common schema
+var Schema = mongoose.Schema;
+mongoose.model('Pages', new Schema({ 'title': String, 'copy': String, 'order': Number }));
+app.set('db', mongoose);
+
+// == ROUTING == //
+
+routes = routes(app);
+
+// Main page routes
 app.get('/', routes.index);
 app.get('/lab', routes.lab);
 app.get('/contact', routes.contact);
 
-// Feed routs
+// Feed routes
 app.get('/instagram', feeds.instagram_feed);
 app.get('/last-fm', feeds.lastfm_feed);
 
