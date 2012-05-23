@@ -4,9 +4,11 @@
  */
 
 var express = require('express')
+  , mongoose = require('mongoose')
+  // routes
   , routes = require('./routes')
-  , feeds = require('./routes/feeds')
-  , mongoose = require('mongoose');
+  , feeds = require('./routes/feeds');
+  
 
 var app = module.exports = express.createServer();
 
