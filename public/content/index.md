@@ -1,3 +1,58 @@
+## Having a single DB connection with Express.js and route file seperation
+
+In the process of setting up my MongoDB connection for storing the content of my site (which will be an early step for building the CMS) I realized I was going to need access to my db object in all of my routes. Having the routes split up into multiple files /rotes/index.js and /routes/feeds.js it became obvious that I would need to pass the data to my routing functions.
+
+To start with we need to define the connection and common schema in the app.js file:
+
+	mongoose.connect('mongodb://localhost/jimmy-hillis-me',
+		function(err) {
+  		if (err) {
+		    console.log("Failed to connect to MongoDB");
+  		}
+		}
+	);
+
+	// Define common schema
+	var Schema = mongoose.Schema;
+	mongoose.model('Pages', new Schema({ 
+		'title': String, 
+		'copy': String, 
+		'order': Number 
+	}));
+	app.set('db', mongoose);
+
+Code is easy to follow but we're connecting to the local MongoDB server and the jimmy-hillis-me database. We can then define our schema (without being in a callback due to the caching features of Mongoose). The Pages schema is a simple content setup we'll use in every route. Then we set it to be an app variable so we can pass the app to build the local context.
+
+Now in my routes file (/routes/index.js) we'll convert the entire process into a function.
+
+	var controller = {};
+	module.exports = function (app) {
+		db = app.set('db');
+		return controller;
+	}
+
+With this simple change we're allowing context to be passed into the controller object. We add all public routes to the controller object instead of directly to exports now.
+
+	controller.index = function(req, res) {}
+
+They now have access to db and app and we're good to go. Here's a quick example of using the db in a route to grab some content with Mongoose:
+
+	Pages = db.model('Pages');
+  Pages.findOne({ 'title' : 'Contact' }, 
+		function(err, this_page) { 
+			if (err) {
+				console.log("Loading content error");
+			}
+			content = _parseMarkdown(this_page.copy);
+			res.render('contact', 
+				{ title: this_page.title, content: content }
+			)
+  });
+
+We're simply pulling our Pages schema out of the Mongoose models and then running a simple find query to pull out the page we want. With that I'm parsing the markdoown copy and the title to the view and we're done.
+
+These changes enable us to keep our app well formatted as well as allowing us access to a single database variable without needing to recreate it each route. Alternatively we could build a database singleton script which is required in each route but I've found using a closure and this method makes more sense with JavaScript scope.
+
 ## Cache JSON responses from external APIs
 
 I decided to write a really simple file-cache for my feed's just to check out the FS functionality within nodejs. My plan was simple: check if there is a cache file (which isn't too old) and use it. If there isn't one hit the third party and pull down the information I need. Cache it to a flat file. Use it. **Easy!**
