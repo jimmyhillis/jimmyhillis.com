@@ -1,191 +1,239 @@
+exports.cache = function(req, res, next) {
+
+	var fs = require('fs')
+		, route_name = req.route.path.split('.')[0].split('/').pop()
+		, cache_path = res.app.settings.cache + "/" + route_name + '-feed'
+		, cache = {};
+
+	// Set default values to send to feed method
+	cache.data = false;
+	/* 
+	 * This public method is used by the feed method
+	 * to cache a return for following requests
+	 */
+	cache.save = function(data) {
+		// Data is async so throw a completion notice for testing
+		fs.writeFile(cache_path, data, function() {
+			// Only log success in development environment
+			req.app.configure('development', function(){
+    		console.log(route_name + ' cache saved.');
+			});
+		});
+	};
+
+	// Set public accessible data for next function
+	req.cache = cache;
+
+	/* We'll do some simple file caching here by checking
+	 * for a cache file and loading the JSON if it's not too old.
+	 * Load the details about the cache file so we can
+	 * run some tests on how old it is. */
+	fs.stat(cache_path, function(err, cache_stat) {
+
+		var now_time = new Date()
+			, cache_overdue = false;
+
+		// File doesn't exist.. probably. Might do a check for that here?
+		if (err) {
+			return next();
+		}
+		
+		if ((now_time.getTime() - cache_stat.mtime.getTime()) > res.app.settings.external_cache_time) {
+			next();
+		}
+
+		// Cache is good, let's grab the data
+		fs.readFile(cache_path, 'ascii', function(err, data) {
+
+			// Cache file is broken somehow, throw an error?
+			if (err) {
+				return next(err);
+			}
+			// No cache data so move on
+			else if (data === "") {
+				return next();
+			}
+
+			// Better turn it into an object before passing it
+			cache.data = JSON.parse(data);
+			next();
+
+		});
+
+	});
+
+}
 /*
  * GET twitter recent feed list
  */
-exports.twitter_feed = function (req, res) {
-
-	var fs = require('fs');
-	
+exports.twitter = function (req, res) {
+	var fs = require('fs');	
 }
 /* GET instagram latest photos 
  */
-exports.instagram_feed = function (req, res) {
+exports.instagram = function (req, res) {
 
 	var Instagram = require('instagram-node-lib')
-		, fs = require('fs')
-		, cache_path = res.app.settings['static'] + '/cache/instagram.json';		
+		, cache = req.cache || false
+		, data = cache.data || false;
 
 	Instagram.set('client_id', "76fdd68757a74e76bdafaf69ea4d7e79");
 	Instagram.set('client_secret', "19aaee33c26e4382a99a7b556c0474fd");
 	Instagram.set('access_token', "29667524.76fdd68.22c97f05f88f4af6adb3b81482fcd6f9");
 
-	res.contentType('json');
+	function handleData(data) {
+		// Provide JSON version of this data
+		// and not the HTML version
+		if (req.param('format') === "json") {
 
-	/* We'll do some simple file caching here by checking
-	 * for a cache file and loading the JSON if it's not too old.
-	 * Load the details about the cache file so we can
-	 * run some tests on how old it is. */
-	fs.stat(cache_path, function(err, stat) {
-
-		var cache_time
-			, now_time = new Date()
-			, cache_overdue = false;
-
-		/* Work out if the cache is overdue, currently set to 10 minutes.
-		 * @TODO turn this into a system wide variables  */
-		if (!err) {	
-			cache_time = stat.mtime;
-			if ((now_time.getTime() - cache_time.getTime()) > res.app.settings['external_cache_time']) {
-				cache_overdue = true;
+			res.contentType('json');
+			if (req.param('callback')) {
+				data = req.param('callback') + "(" + data + ")"; 
 			}
-		}
+			res.send(data);
+			
+		} // !if (json)
 
-		if (!err && !cache_overdue) {
-
-			console.log('Instagram cache available.');
-
-			fs.readFile(cache_path, 'ascii', function(err, data) {
-
-				/* Looks like the cache was broken somehow, better do something.. */
-				if (err) {
-					console.log('The Instagram cache will not open.');
-					throw err;
-				}
-
-				if (req.param('callback')) {
-					data = req.param('callback') + "(" + data + ")"; 
-				}
-
-				res.send(data);
-
-			});
-		
-		}
-		/* There is no cache, or it's over due */
+		// Provide an HTML version for
+		// standard browser clients
 		else {
 
-			Instagram.users.recent({ 
-				user_id: 29667524, 
-				'complete': function(data) {
-
-					data = JSON.stringify(data);
-
-					/* Cache the data in async, move on anyway! */
-					fs.writeFile(cache_path, data, function() {
-						console.log('Instagram cache saved!');
-					});
-
-					if (req.param('callback')) {
-						data = req.param('callback') + "(" + data + ")"; 
-					}
-
-					res.send(data);
-					
-				} 
+			res.render('feed/instagram', { 
+				title: 'Instagram feed', 
+				copy: 'Here are my latest photos', 
+				photos: data 
 			});
 
-		}
-	});
+		} // !else (html)		
+	}
+
+	// No data provided by the cache
+	if (!data) {
+
+		// Only log success in development environment
+		req.app.configure('development', function(){
+  		console.log('This feedx has no cache. Making full request.');
+		});
+
+		Instagram.users.recent({ 
+			user_id: 29667524, 
+			'complete': function(data) {
+
+				// Save the returned data to the cache object
+				cache.save(JSON.stringify(data));
+
+				// While saving handle and display data
+				handleData(data);
+			}
+		});
+
+	}
 	
-}
+	// We have the feed data required
+	else {
+	
+		handleData(data);
+
+	} // !else (we have data)
+
+} // instagram
+
 /*
  * GET last.fm recent tracks list
+ * JSON/HTML
+ * This route will take a request with the
+ * after a caching middleware call. If no
+ * data is provided by the cache it will
+ * automatically pull the data and update the
+ * cache while providing a response to the
+ * user.
+ * @dependencies
+ * - LastFmNode
  */
-exports.lastfm_feed = function (req, res) {
+exports.lastfm = function (req, res) {
 
-	var fs = require('fs');
+	var 
+	// dependencies
+		  LastFmNode = require('lastfm').LastFmNode
 
-	var LastFmNode = require('lastfm').LastFmNode
-		, recent_tracks
+	// data
 		, lastfm = new LastFmNode({
-	  		api_key: 'c005da8fa06f6eb6e7adadbc477eb0d0',    // sign-up for a key at http://www.last.fm/api
+	  		api_key: 'c005da8fa06f6eb6e7adadbc477eb0d0', // sign-up for a key at http://www.last.fm/api
 	  		secret: '43b15add6b231357c5381ff1f5df4417',
 	  		useragent: 'jimmy.hillis.me/v0.1' // optional. defaults to lastfm-node.
 			})
-		, cache_path = res.app.settings['static'] + '/cache/last-fm.json';
+		, cache = req.cache || false
+		, data = cache.data || false;
 
-	res.contentType('json');
+	function handleData(data) {
 
-	/* We'll do some simple file caching here by checking
-	 * for a cache file and loading the JSON if it's not too old.
-	 * Load the details about the cache file so we can
-	 * run some tests on how old it is. */
-	fs.stat(cache_path, function(err, stat) {
+		// Provide JSON version of this data
+		// and not the HTML version
+		if (req.param('format') === "json") {
 
-		var cache_time
-			, now_time = new Date()
-			, cache_overdue = false;
+			//res.contentType('json');
+			//if (req.param('callback')) {
+			//	data = req.param('callback') + "(" + data + ")"; 
+			//}
+			res.json(data, { 'Content-Type': 'text/javascript' });
+			
+		} // !if (json)
 
-		/* Work out if the cache is overdue, currently set to 10 minutes.
-		 * @TODO turn this into a system wide variables  */
-		if (!err) {	
-			cache_time = stat.mtime;
-			if ((now_time.getTime() - cache_time.getTime()) > res.app.settings['external_cache_time']) {
-				cache_overdue = true;
-			}
-		}
-
-		if (!err && !cache_overdue) {
-
-			console.log('Last-fm cache available.');
-
-			if (!cache_overdue && fs.readFile(cache_path, 'ascii', function(err, data) {
-
-				/* Looks like the cache was broken somehow, better do something.. */
-				if (err) {
-					throw err;
-				}
-
-				if (req.param('callback')) {
-					data = req.param('callback') + "(" + data + ")"; 
-				}
-
-				res.send(data);
-
-			}));
-		
-		}
-		/* There is no cache, or it's over due */
+		// Provide an HTML version for
+		// standard browser clients
 		else {
 
-			recent_tracks = lastfm.request('user.getRecentTracks', { 
-				user: 'ppjim3', 
-				limit: 10, 
-				handlers: {
-					success: function(data) {
-
-						var recent_tracks = data.recenttracks.track
-							, track
-							, track_strings = []
-							, content = "";
-
-						for (var i = recent_tracks.length - 1; i >= 0; i--) {
-							track = recent_tracks[i];
-							track_strings.push(track.artist['#text'] + ' - ' + track.name);
-						};
-
-						/* Create JSON response */
-						content = JSON.stringify(track_strings);
-
-						/* Cache the data in async, move on anyway! */
-						fs.writeFile(cache_path, content, function() {
-							console.log('Last.fm cache saved!');
-						})
-
-						if (req.param('callback')) {
-							content = req.param('callback') + "(" + content + ")"; 
-						}
-
-						res.send(content);
-					},
-					error: function(error) {
-						console.log("Error: " + error.message);
-						res.send('Error');
-					}
-		    }
+			res.render('feed/lastfm', { 
+				title: 'Last.fm Feed', 
+				copy: "Here is the latest music I've been listening too!",
+				plays: data 
 			});
 
-		}
+		} // !else (html)
 
-	});
+	}
 
-}
+	// No data provided by the cache
+	if (!data) {
+
+		// Only log success in development environment
+		req.app.configure('development', function(){
+  		console.log('This feed has no cache. Making full request.');
+		});
+
+		lastfm.request('user.getRecentTracks', {
+			user: 'ppjim3', 
+			limit: 10, 
+			handlers: {
+				success: function(data) {
+
+					var recent_tracks = data.recenttracks.track
+						, track_strings = [];
+
+					for (var i = recent_tracks.length - 1; i >= 0; i--) {
+						track_strings.push(recent_tracks[i].artist['#text'] + ' - ' + recent_tracks[i].name);
+					};
+
+					// Save the returned data to the cache object
+					cache.save(JSON.stringify(track_strings));
+
+					// While saving handle and display data
+					handleData(data);
+
+				},
+				error: function(err) {
+					throw err;
+				}
+	    }
+		});
+
+	} // !if (no cache data)
+
+	// We have the feed data required
+	else {
+	
+		handleData(data);
+
+	} // !else (we have data)	
+
+} // !lastfm

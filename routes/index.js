@@ -33,20 +33,26 @@ controller.contact = function(req, res) {
 
 	var content = ""
 		, Pages = db.model('Pages');
+		
+	//res.send("Yeah man!");
 
   // Load the MD content for this page
   Pages.findOne({ 'title' : 'Contact' }, function(err, this_page) { 
 
 		if (err) {
-			console.log("Loading content error");
+			console.log("Loading content error: " + err);
 		}
 
 		content = _parseMarkdown(this_page.copy);
 		res.render('contact', { title: this_page.title, content: content })
 
   });
-	
+  
 }; // !controller.contact
+
+controller.error = function(req, res) {
+	res.send("404. Page not found");	
+}
 
 // Private methods
 

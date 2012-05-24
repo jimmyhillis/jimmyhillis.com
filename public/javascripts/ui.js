@@ -4,8 +4,6 @@ $(document).ready(function() {
 
 	var appendPhotos = function appendPhotos(photos) {
 
-		console.log("Yeah man!");
-
 		var $instagram_feed = $('.instagram-feed')
 			, $photo_list = $('<ul></ul>')
 					.addClass('instagram-photos') // list of all photos to build before adding
@@ -16,8 +14,9 @@ $(document).ready(function() {
 
 		if (photos.length) {
 
+			photos = photos.reverse();
 			for (i = photos.length - 1; i > 0; i--) {
-				console.log(photos[i].images.thumbnail.url);
+				//console.log(photos[i].images.thumbnail.url);
 				$photo = $('<img />').addClass('instagram-photo').attr('src', photos[i].images.thumbnail.url);
 				$photo_list.append($('<li></li>').append($photo));
 			}
@@ -28,7 +27,7 @@ $(document).ready(function() {
 
 	}
 
-	loadJSONP("/instagram", appendPhotos);
+	loadJSONP("/feed/instagram.json", appendPhotos);
 
 	// LAST.FM RECENTLY PLAYED LIST
 
@@ -57,6 +56,6 @@ $(document).ready(function() {
 	}
 
 	// Load LAST.FM RECENT TRACKS LIST
-	loadJSONP("/last-fm", appendPlays);
+	loadJSONP("/feed/lastfm.json", appendPlays);
 
 });
