@@ -13,14 +13,12 @@ module.exports = function (app) {
 
 controller.index = function(req, res){
   var content;
-
   content = _parseMarkdownFile(__dirname + '/../public/content/index.md');
   res.render('index', { title: 'jimmy.hillis.me', blog: content })
 };
 
 controller.lab = function(req, res){
 	var content;
-	
 	content = _parseMarkdownFile(__dirname + '/../public/content/lab.md');
 	res.render('lab', { title: 'Lab', content: content })
 };
@@ -51,7 +49,7 @@ controller.contact = function(req, res) {
 }; // !controller.contact
 
 controller.error = function(req, res) {
-	res.send("404. Page not found");	
+	res.send("404. Page not found");
 }
 
 // Private methods

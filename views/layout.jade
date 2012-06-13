@@ -19,26 +19,53 @@ html.no-js(lang='en')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/fonts.css')
     //-script(src='/javascripts/libs/modernizr-2.5.3.min.js')
+    //-link(rel='stylesheet', href='lib/prettify/styles/desert.css')
 
   body
-
-    div.navbar.navbar-fixed-top
-      div.navbar-inner
-        div.container
-          ul.nav
-            li
-              a(href='/') jimmy.hillis
-            li 
-              a(href='/lab') lab
-            li 
-              a(href='/contact') contact
     
     div.container-fluid
       div.row-fluid
-       
-        div.content.copy.span9!=body
+        // gutter spacing
+        div.span1
+        // main content wrap
+        div.content.span10
+          
+          div.page-header
+            .page-title 
+              a(href='/') Jimmy.Hillis.Me
+            small.page-subtitle I program, read &amp; play music (though not always in that order).
 
-        div.sidebar.span3
+            // Main navigation
+            .nav-container
+              // special div for centering
+              .table-center
+                ul.top-nav
+                  li
+                    a.nav-link(href='/') jimmy.hillis
+                  li 
+                    a.nav-link(href='/lab') lab
+                  li 
+                    a.nav-link(href='/contact') contact
+
+          
+            .social-media
+              .table-center
+                ul.social-media-list
+                  li.social-media-item
+                    a(href='//twitter.com/ppjim3').twitter Twitter
+                  li.social-media-item
+                    a(href='//last.fm/user/ppjim3').last-fm Last.FM
+                  li.social-media-item
+                    a(href='//twitter.com/ppjim3').instagram Instagram
+
+          div.copy
+
+            !{body}
+
+        div.span1
+
+        //-div.sidebar.span3
+          
           div.tabable
 
             ul.nav.nav-pills
@@ -82,31 +109,41 @@ html.no-js(lang='en')
       
       div.row-fluid
 
-        .footer.span9
+        .span2 
+
+        .footer.span8
 
           div.row-fluid
 
-            div.span4.colophon.well
+            .span5
               :markdown
                 This website was created by Jimmy Hillis using open source software. [node.js](//nodejs.org), [express](//expressjs.com/), [less](//lesscss.org). You can see it all on [github](//github.com/jimmyhillis/jimmy.hillis.me) too.
-  
-            div.span4.footer-block.projects.well
-              ul.nav.nav-list
-                li.nav-header Projects / Code
-                li
-                  a(href="//github.com/jimmyhillis") GitHub
-                li
-                  a(href="/lab/comicbox.js") comicbox.js
 
-            div.span4.footer-block.social-media.well
+            .span1
+  
+            .span2.projects
+              ul.nav.nav-list
+                li.nav-header Projects
+                li
+                  a(href="//github.com/jimmyhillis") Github
+                li
+                  a(href="/lab/comicbox.js") Comicboxjs
+
+            .span2.social-media
                 ul.nav.nav-list
                   li.nav-header Social Media
                   li
                     a(href="//twitter.com/ppjim3") Twitter
                   li
-                    a(href="//twitter.com/ppjim3") Last.fm
+                    a(href="//twitter.com/ppjim3") Lastfm
                   li
-                    a(href="//www.goodreads.com/user/show/5464248-jimmy-hillis") GoodReads
+                    a(href="//www.goodreads.com/user/show/5464248-jimmy-hillis") Goodreads
+
+            .span2.friends
+              ul.nav.nav-list
+                li.nav-header Friends
+                li
+                  a(href="//hatchd.com.au") Hatchd Digital
 
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
     script
@@ -114,6 +151,8 @@ html.no-js(lang='en')
     script(src='/javascripts/bootstrap.min.js')
     script(src='/javascripts/tweets.js')
     script(src='/javascripts/ui.js')
+    script(src='/lib/prettify/src/prettify.js')
+
     script
       var _gaq=[['_setAccount','UA-31741846-1'],['_trackPageview']];
       (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

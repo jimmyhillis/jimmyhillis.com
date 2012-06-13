@@ -34,11 +34,22 @@
 
 @font-face {
 	font-family: 'LiberationSansBoldItalic';
-	src: url('LiberationSans-BoldItalic-webfont.eot');
-	src: url('LiberationSans-BoldItalic-webfont.eot?#iefix') format('embedded-opentype'),
-		url('LiberationSans-BoldItalic-webfont.woff') format('woff'),
-		url('LiberationSans-BoldItalic-webfont.ttf') format('truetype'),
-		url('LiberationSans-BoldItalic-webfont.svg#LiberationSansBoldItalic') format('svg');
+	src: url('/fonts/LiberationSans-BoldItalic-webfont.eot');
+	src: url('/fonts/LiberationSans-BoldItalic-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/LiberationSans-BoldItalic-webfont.woff') format('woff'),
+		url('/fonts/LiberationSans-BoldItalic-webfont.ttf') format('truetype'),
+		url('/fonts/LiberationSans-BoldItalic-webfont.svg#LiberationSansBoldItalic') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ChunkFiveRegular';
+	src: url('/fonts/Chunkfive-webfont.eot');
+	src: url('/fonts/Chunkfive-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/Chunkfive-webfont.woff') format('woff'),
+		url('/fonts/Chunkfive-webfont.ttf') format('truetype'),
+		url('/fonts/Chunkfive-webfont.svg#ChunkFiveRegular') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }

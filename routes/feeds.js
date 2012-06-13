@@ -82,16 +82,13 @@ exports.instagram = function (req, res) {
 	Instagram.set('access_token', "29667524.76fdd68.22c97f05f88f4af6adb3b81482fcd6f9");
 
 	function handleData(data) {
+
 		// Provide JSON version of this data
 		// and not the HTML version
 		if (req.param('format') === "json") {
 
-			res.contentType('json');
-			if (req.param('callback')) {
-				data = req.param('callback') + "(" + data + ")"; 
-			}
-			res.send(data);
-			
+			res.json(data, { 'Content-Type': 'text/javascript' });
+
 		} // !if (json)
 
 		// Provide an HTML version for
@@ -112,12 +109,18 @@ exports.instagram = function (req, res) {
 
 		// Only log success in development environment
 		req.app.configure('development', function(){
-  		console.log('This feedx has no cache. Making full request.');
+  		console.log('This feed has no cache. Making full request.');
 		});
 
 		Instagram.users.recent({ 
 			user_id: 29667524, 
 			'complete': function(data) {
+
+				var _ = require('underscore');
+
+				/* I only want the captions and images for now so I
+				 * will save time by only keeping them in the cache */
+				//data = _.zip(_.pluck(data, 'images'), _.pluck(data, 'caption'));
 
 				// Save the returned data to the cache object
 				cache.save(JSON.stringify(data));
@@ -170,13 +173,7 @@ exports.lastfm = function (req, res) {
 		// Provide JSON version of this data
 		// and not the HTML version
 		if (req.param('format') === "json") {
-
-			//res.contentType('json');
-			//if (req.param('callback')) {
-			//	data = req.param('callback') + "(" + data + ")"; 
-			//}
 			res.json(data, { 'Content-Type': 'text/javascript' });
-			
 		} // !if (json)
 
 		// Provide an HTML version for

@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+	$('.content code').addClass('prettyprint');
+	prettyPrint();
+
 	// INSTAGRAM LATEST PHOTOS
 
 	var appendPhotos = function appendPhotos(photos) {
@@ -57,5 +60,28 @@ $(document).ready(function() {
 
 	// Load LAST.FM RECENT TRACKS LIST
 	loadJSONP("/feed/lastfm.json", appendPlays);
+
+	$('.delete').live('click', function() {
+		if (confirm('Are you sure you want to delete that item?')) {
+			var element = $(this)
+				, form = $('<form></form>');
+			form.attr({
+				method: 'POST',
+				action: element.attr('href')
+			})
+			.hide()
+			.append('<input type="hidden" />')
+			.find('input')
+			.attr({
+				'name': '_method',
+				'value': 'delete'
+			})
+			.end()
+			.submit();
+		}
+		return false;
+	});
+
+
 
 });
