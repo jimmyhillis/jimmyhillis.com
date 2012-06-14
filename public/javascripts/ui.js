@@ -1,7 +1,24 @@
 $(document).ready(function() {
 
+	/**
+	 * Setup pretty paint colors for my code, without actually
+	 * having any markup in the .MD files. Just run through and
+	 * add them before loading the called 
+	 */
+	
 	$('.content code').addClass('prettyprint');
 	prettyPrint();
+
+	/**
+	 * Load UI with user requests
+	 */
+
+	$('.widget').hide();
+	$('.social-media-item a').on('click', function() {
+		$('#'+$(this).attr('data-widget')).slideToggle(150);
+		return false;
+	});
+
 
 	// INSTAGRAM LATEST PHOTOS
 
@@ -47,8 +64,7 @@ $(document).ready(function() {
 			for (i = plays.length - 1; i > 0; i--) {
 				$play = $('<li></li>')
 					.addClass('last-fm-play')
-						.addClass('well')
-							.text(plays[i]);
+						.text(plays[i]);
 				$plays_list.append($play);
 			}
 

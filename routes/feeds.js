@@ -200,7 +200,7 @@ exports.lastfm = function (req, res) {
 
 		lastfm.request('user.getRecentTracks', {
 			user: 'ppjim3', 
-			limit: 10, 
+			limit: 20, 
 			handlers: {
 				success: function(data) {
 

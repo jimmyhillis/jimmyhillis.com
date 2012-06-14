@@ -185,7 +185,7 @@ var loadJSONP = (function() {
 				tweets[i].text = tweets[i].text.replace(url, real_url);
 			}
 
-			tweet = '<div class="tweet well">' + tweets[i].text + '</div>';
+			tweet = '<div class="tweet">' + tweets[i].text + '</div>';
 			tweet_feed.append($(tweet));
 
 		}

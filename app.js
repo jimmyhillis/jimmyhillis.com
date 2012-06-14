@@ -7,7 +7,7 @@ var express = require('express')
 
   // routes
   , routes = require('./routes')
-  , blogroutes = require('./routes/blog')
+  //, blogroutes = require('./routes/blog')
   , feeds = require('./routes/feeds');
   
 var app = module.exports = express.createServer();
@@ -72,11 +72,11 @@ app.get('/lab', routes.lab);
 app.get('/contact', routes.contact);
 
 // Blog routes
-app.get('/blog.:format?', blogroutes.list);
-app.post('/blog.:format?', blogroutes.create);
-app.get('/blog/:id.:format?', blogroutes.read);
-app.del('/blog/:id.:format?', blogroutes.delete);
-app.put('/blog.:format?', blogroutes.update);
+//app.get('/blog.:format?', blogroutes.list);
+//app.post('/blog.:format?', blogroutes.create);
+//app.get('/blog/:id.:format?', blogroutes.read);
+//app.del('/blog/:id.:format?', blogroutes.delete);
+//app.put('/blog.:format?', blogroutes.update);
 
 // Feed routes
 app.get('/feed/instagram.:format?', feeds.cache, feeds.instagram);
