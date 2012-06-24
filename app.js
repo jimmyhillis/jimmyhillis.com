@@ -47,6 +47,7 @@ app.configure('production', function(){
 
 // == DATABASE == //
 
+/*
 mongoose.connect('mongodb://localhost/jimmy-hillis-me', function(err) {
   if (err) {
     console.log("Failed to connect to MongoDB");
@@ -56,6 +57,7 @@ mongoose.connect('mongodb://localhost/jimmy-hillis-me', function(err) {
 mongoose.connection.on("open", function() {
   console.log("mongodb is connected");
 });
+*/
 
 // Define common schema
 var Schema = mongoose.Schema;
@@ -69,6 +71,7 @@ app.set('db', mongoose);
 routes = routes(app);
 app.get('/', routes.index);
 app.get('/lab', routes.lab);
+app.get('/music', routes.music);
 app.get('/contact', routes.contact);
 
 // Blog routes

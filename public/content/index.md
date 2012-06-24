@@ -1,4 +1,73 @@
+## Running with Twitter Bootstrap leaves me exahusted
+#### 24/June/2012
+
+The current look of this site is a simple responsive design template with enough design to call it my own. When starting it off I decided I would try and learn a few new tricks and make some inroads using the Twitter Bootstrap. These CSS frameworks are all the rage right? Having cobled some basic HTML together and throwing the Bootstrap CSS + JS you can immediatly see some really strong layout and design on your page. It was great, really happy with the look after an hour and no design in mind.
+
+After a few weeks of working on other code and happily dealing with the vanilla Twitter Bootstrap look I started to add more and more custom design and CSS to the site. I also wanted to run with my own responsive changes here and there. *This is where the trouble began.*
+
+The more I wanted to make changes to lower level structural styes, the more trouble I ran into. Their grid system allows for some simple partitioning of content through markup and classes (something I'm normally against but for the sake of getting the most out of Bootstrap that's how it went). You might want to have a 3 column area with some gutter between them right? Some HAML markup:
+
+	.row-fluid
+		.span5 .my-column-1
+			Big content goes here
+		.span1.gutter
+			// This is a gutter and adds some spacing
+		.span3.my-column-2
+			Smaller content here
+		.span3.my-column-3
+			Smaller content here
+
+It's pretty simple markup and, except for the annoying gutter element, isn't too bad. It's relativly clear (if non-descriptive) in the class department too but just go with me on it.
+
+The first major problem I came up against was the specific nature of their classes and the result in trying to overwrite their grid level elements. Some simple CSS:
+
+	.my-column-2,
+	.my-column-3 {
+		width: 100%;
+		float: none;
+	}
+
+So this attempts to turn those secondary columns into full width. You might want to do this, like I did, for a mobile device that is not wide enough and we feel the content should really get some whitespace.
+
+Unfortunately due to the way the classes are built in the Twitter Bootstrap you will not, easily, be able to overwrite this code without a horrid !important tag. Why? The spans rely on the row-fluid parent and thus are defined along the lines of
+
+	.row-fluid .span3 {
+		// style here
+	}
+
+To make your style specific enough to break this you are looking at .row-fluid .my-column-3 (at minimum) which is adding a coupling that means nothing and may actually confuse anyone reading the code. Big no no when thinking about CSS maintainence and modularization.
+
+I've decided, for the time being, to use a few !important tags (much against my better judgement) as I hope the lack of coupling is a little more helpful to me at this iteration. Hell, they're only going to be needed until I go through and refactor out all the Twitter Bootstrap code. 
+
+My overall feeling about Twitter Bootstrap? The gains in the short run are lost many time over in the long.
+
+## Load fast, then load the rest.
+#### 14/June/2012
+
+*Making sure your page loads fast is important*. There are lots of optimisations you can do server side however when dealing with an external sources (e.g. feed) you are never going to be fast. With that in mind I've decided that loading all my external feeds are absolutely unnecessary for an initial load and can be passed across to the user later. All of this assumes the user is running JavaScript and for my purposes, that's OK.
+
+I've started using JavaScript to to load my feeds (Twitter + Instagram) once the user is already reading the site. Once my standard JS initial complete (setting up UI & any user callbacks that are required) I throw off a few requests. To do this in a very trivial way you can use straight HTML and jQuery:
+
+	$(document).ready(function() {
+		
+	// Run all init functionality first
+		// ..
+
+		// Load the data required for filling in my third party data and put it where it belongs
+		$('.last-fm-feed').load("/feed/lastfm", function() {
+			$('.last-fm-feed').slideDown();
+		});
+			
+	}
+
+In the above code I'm throwing a request back to my own server as I run my feed cache (as described in a previous blog post) to make sure I don't hit third party servers that often. The request will return some basic HTML which is pushed to the right location in the DOM.
+
+This simple process that speed up the initial load of all pages considerably. You can also take this one step further and throw this data into a localStorage cache will means they don't even need to hit the server, and be loaded nearly instantly with the page display.
+
+In my real-life situation I'm using a more complicated verison which grabs JSON and builds HTML directly in the JavaScript rather than rolling with some HTMLr returns. I might even go into more details here soon.
+
 ## Having a single DB connection with Express.js and route file seperation
+#### 22/May/2012
 
 In the process of setting up my MongoDB connection for storing the content of my site (which will be an early step for building the CMS) I realized I was going to need access to my db object in all of my routes. Having the routes split up into multiple files /rotes/index.js and /routes/feeds.js it became obvious that I would need to pass the data to my routing functions.
 
@@ -48,6 +117,62 @@ They now have access to db and app and we're good to go. Here's a quick example 
 				{ title: this_page.title, content: content }
 			)
   });
+
+We're simply pulling our Pages schema out of the Mongoose models and then running a simple find query to pull out the page we want. With that I'm parsing the markdoown copy and the title to the view and we're done.
+
+These changes enable us to keep our app well formatted as well as allowing us access to a single database variable without needing to recreate it each route. Alternatively we could build a database singleton script which is required in each route but I've found using a closure and this method makes more sense with JavaScript scope.
+
+## Having a single DB connection with Express.js and route file seperation
+
+In the process of setting up my MongoDB connection for storing the content of my site (which will be an early step for building the CMS) I realized I was going to need access to my db object in all of my routes. Having the routes split up into multiple files /rotes/index.js and /routes/feeds.js it became obvious that I would need to pass the data to my routing functions.
+
+To start with we need to define the connection and common schema in the app.js file:
+
+	mongoose.connect('mongodb://localhost/jimmy-hillis-me',
+		function(err) {
+			if (err) {
+				console.log("Failed to connect to MongoDB");
+			}
+		}
+	);
+
+	// Define common schema
+	var Schema = mongoose.Schema;
+	mongoose.model('Pages', new Schema({ 
+		'title': String, 
+		'copy': String, 
+		'order': Number 
+	}));
+	app.set('db', mongoose);
+
+Code is easy to follow but we're connecting to the local MongoDB server and the jimmy-hillis-me database. We can then define our schema (without being in a callback due to the caching features of Mongoose). The Pages schema is a simple content setup we'll use in every route. Then we set it to be an app variable so we can pass the app to build the local context.
+
+Now in my routes file (/routes/index.js) we'll convert the entire process into a function.
+
+	var controller = {};
+	module.exports = function (app) {
+		db = app.set('db');
+		return controller;
+	}
+
+With this simple change we're allowing context to be passed into the controller object. We add all public routes to the controller object instead of directly to exports now.
+
+	controller.index = function(req, res) {}
+
+They now have access to db and app and we're good to go. Here's a quick example of using the db in a route to grab some content with Mongoose:
+
+	Pages = db.model('Pages');
+	Pages.findOne({ 'title' : 'Contact' },
+		function(err, this_page) { 
+			if (err) {
+				console.log("Loading content error");
+			}
+			content = _parseMarkdown(this_page.copy);
+			res.render('contact', 
+				{ title: this_page.title, content: content }
+			)
+		}
+	);
 
 We're simply pulling our Pages schema out of the Mongoose models and then running a simple find query to pull out the page we want. With that I'm parsing the markdoown copy and the title to the view and we're done.
 
@@ -254,133 +379,3 @@ A few things I really like is the simple way of chaining class and id properties
 Is very short and simple and straight to the point. 
 
 Having no need to closing tags (though you can manually close them yourself if you want) is a boon as well, saving a huge amount of time and effort. Using tabs and returns also forces the templater to write nicely formatting code.
-
-## Apr/5th
-
-I made some changes to the TWEETS application I've been working on to get it cacheing for a little imrpvoed speed. I intended to use localStorage (keeping with my JS only! guideline) to track my feed any time you reloaded a page -- at least for a time.
-
-The process of using localStorage is a simple 2 part process:
-
-1. Before I contact the Twitter API check if I have a cached version already (and if it's recent *enough* to be valid)
-2. When I get a response from the Twitter API store it in locaLStorage for the next page load.
-
-Pretty simple goals so to implement it I first had to rearrange the way the JSONP callback was working. Currently it simlpy calls the user provided callback with the response from Twitter. I needed something in middle to cache that response in a way that was useful to the TWEETS application. I ended up creating a new function called 
-
-	passTweetsToCallback()
-
-This private method takes the response from Twitter and does a few things. Firstly I add a timestamp to the response so that next time I load a page I know how old they are, don't wait to keep a single cache for weeks do we?
-
-After that I simply stringify the response and throw it into localStorage.
-
-	localStorage.setItem('TWEETS', JSON.stringify(cachedTweets));
-
-I should have a better naming convention to allow for multiple feeds but for now there is no functionality to support that. It could be done as simply as appending the username to the localStorage variable but I think storing multiple feeds within an array within the single TWEETS has more legs -- less crowding of the localStorage keys pace.
-
-After that I call the callback function with the response tweets. To do this my call back needed access to that function which is provided to getTweets. I don't have direct access so I set the call back as a hidden variale userCallback which is accessible throughout my application.
-
-To check if this exists I run a few simple test. Check if the localStorage key for TWEETS exists and then make sure it's recent enough. I've used 3 hours as my base point as it's pretty reasonably to see a few tweets wthin a few hours, but shouldn't cause any damage if they aren't shown immediatley.
-
-To do this I used the built in JavaScript data functions to build a new date and remove 3 hours from it. If the cache time is less than 3 hours old we can use the cache.
-
-	var refreshCacheTime = new Date();
-	refreshCacheTime.setHours(refreshCacheTime.getHours() - 3);
-	if (cachedTweets.cachetime >= refreshCacheTime) {
-		/* Great! Let's use the cache */
-	}
-
-These simple changes have increase the speed and decreased the depndencies on a third party greatly across a single session on any site that needs to hit Twitter. I've written this same functionality in PHP and stored it in a file but I like the simplicity and async nature of doing this with JavaScript.
-
-## 20/Mar
-
-localStorage was the main purpose of the code I was working on today. One of my biggest goals with this project was to creates a persistent database for each user through user side code. I needed a way to store each users data on their own machine without them knowing/doing anything.
-
-Most modern browsers have support for localStorage which is simply a key/value based storage system that allows you to store 4mb worth of data. All data is stored as a string, no matter what.
-
-I needed to store arrays of objects. To do this I needed only look at the JSON library for the following functions
-
-	strngify()
-	parseJSON()
-
-With these two functions you are able to take any JSON (e.g. A JavaScript Object) and turn it into a string. ParsesJSON does the opposite.
-
-Getting an array of object into localStorage was as trivial as:
-
-	window.localStorage(comics.stringfy)));
-
-To get the data out wasn't quite so easy. The main reason for that was simple. The parseJSON function returns an object but it doesn't return the methods, and therefore prototype/constructor of the Object that it was created from. As a simple solution I pulled each Object out of the array and through the data into my constructor function on each page load.
-
-%%
-
-## 23/Mar
-
-Today's progress entailed a few simple additions to the code in hopes of getting through jsLint. This proved more difficult than I'd hoped or expected so I left the code with a few errors remaining. This was, for now, due to the cryptic nature of some of the errors which I was unable to process at the hour I ran through them.
-
-## 24/Mar
-
-I was able to write some more API functions for the app this morning as well as write a starting document to go with it. I've never used the Markdown style scripting text files that GitHub uses so I learned a few new tricks there. Most importantly how to style text with some very basic markdown. ## represents a title and any per tabbed content becomes code. Simple. Got all of the public functions commented within matching code on the site and README. Hopefully I will keep the updated and matching!
-
-## 25/Mar
-
-Today say me make a few larger feature changes in hopes of increasing the scope of the project. Most importantly I managed to write a nice method for sorting and displaying the issues collected within a given series. I wanted to make sure this formatting was as small and useful as possible. In the past I've found many sites list them 1, 2, 3 etc. A verbose and unnecessary way. I wanted to break them down into sequences where possible. 1-3, 5, 7-9 which I have done. This is through a looping method which moves through each issue. Within that issue is checks to see if it belongs in a sequence and builds a string based on that feature. Was harder than anticipated, due to the backwards movement of JS looping (done for efficiency).
-
-I also started the process of incorporating a JS templating system for quicker, and nicer, markup from my App. I picked up and used Handlebars.js which is a very simple library for templating. It uses similar notation to Smarty with its {{}} notation and has a simple set of methods for compiling templates and providing data. It allows for basic looping and string replacement out of the box and plenty of room to build your own functions, none of which I've needed as yet. Currently the Templates are thrown into the App code however this will obviously need to be removed to keep any resemblance to a MVC structure in the coming days.
-
-## 27/Mar
-
-While I was finishing up some of the front end work on the app yesterday I wanted to incorporate my twitter feed into a footer section. Didn't want anything too fancy. Just a simple text feed (maybe some links) and nothing more. Obviously wantd to do an asynchronous JS setup to keep inline with the whole project. Seemed simple enough.
-
-Unfortunately the Twitter provided stuff requires special markup and creates a lot of bloated HTML code to build a feed. After a quick look on GitHub without much luck I decided to build my own. I've done so in PHP before so this would be easy.
-
-Basically up need to build a REST api call through a standard URL with a query string. It basically looks like:
-
-	Api.twitter.com/xxxx.json?name=ppjim3
-
-Now the problem at hand is that you can't use JS to make an Ajax call to a different server due to security restrictions (....). The solution is to use JSONP which allows you to circumvent this restriction by adding a new <script> tag which calls a global function (or sorts) on return with the Object wrapped inside. You basically get something like this in return.
-
-	callback({ data: [{ tweet},{tweet},...])
-
-Which calls a local function passing the data which you can use. Most JS frameworks have a JSONP function built in as there is no default support for it. I used a little gist %% which made a simple JSONP call with a callback function. I built a basic JS function called tweet.js which you can find on GitHub.
-
-Fundamentally you create an object called TWTR and can call buildFeed(username, contentElement) which will build a simple HTML markup of the tweets. Alternatively you can pass a callback function which will be provided an array of Tweets using getTweets(username, callback).
-
-## 30/Mar
-
-My main goal today was to allow users to input issues in a sequence format smilar to the way I list comics. An example of this sequence would be
-
-	1,3-5,8
-
-This would add issues 1,3,4,5,8 into the database for a specific series which would increase the speed and usability for users.
-
-To do this I ran a few string comparisons and regular expression for validating the input as well as to pull out the required information. I'm not particularly good at regular expressions (have attempted to teach myself on and off for years always forgetting bits and re-learning them as I go).
-
-The basic process I'm using is to break the string down into relevant sequences and then acting upon them. First of all I validate the input to confirm there are no rogue characters. My acceptable character range is all numbers, commas, and hyphens. So a quick regex will validate that:
-
-	/(^[1-9]\,\-)+/
-
-That simple regular expression will return false if there are any non acceptable characters in the string. Simple starting point.
-
-Next I split the string into valid blocks on the comma character so we can go through each single issue or sequence on its own. Using the above example:
-
-	"1,3-5,8".split(',') // returns ["1","3-5","8"]
-
-Great! Now we need to go through each new string and break it down further. If the string is a single number (has no hyphen) simply add that issue into the database as is. The harder case is when there is a hypen and we have a sequence! Okay let's split on that.
-
-	"3-5".split('-') // ["3","5"]
-
-Now we know what we're doing. Just a simple for loop that runs from the low number to the high number adding in all the issues inbetween.
-
-	for (low; low <= high; low++)
-		addComic(series, low)
-
-That's the logic behind how I've got the sequencer working. There are a few other gotchas to be aware of though:
-
-* Make sure the sequences are low to high, must order the array before doing the sequence slit.
-* what if there is more than 1 hyphen in the sequence? Probably should throw it away however if you split the same after ordering and use the first and last element you will still get a valid entry, based on a correct if strange input.
-* you could likely use a single regex to run through and parse the entire string for both elements however I find it a lot simpler and logical to break it down into 2 sub problems, even with the compounded loops.
-
-## 31/March
-
-Working on some minor changes today including:
-
-* Made sure the comic search helper (for adding new comics) was case insensitive so you don't have to be so exact!
-* added in some iconography using some OTF web fonts. A new and nice way to insure good support and easy management.

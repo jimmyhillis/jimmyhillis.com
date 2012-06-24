@@ -13,12 +13,18 @@ $(document).ready(function() {
 	 * Load UI with user requests
 	 */
 
+/*
 	$('.widget').hide();
 	$('.social-media-item a').on('click', function() {
-		$('#'+$(this).attr('data-widget')).slideToggle(150);
+
+		var element_id = '#' + $(this).attr('data-widget');
+
+		/* Slide down whatever is currently open to save some space for now * /
+		$('.widget:visible').not(element_id).hide();
+		$('#'+$(this).attr('data-widget')).fadeIn(150);
 		return false;
 	});
-
+*/
 
 	// INSTAGRAM LATEST PHOTOS
 
