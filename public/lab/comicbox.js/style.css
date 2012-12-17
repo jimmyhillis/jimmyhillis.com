@@ -140,8 +140,8 @@ h3 {
   opacity: 0.9;
   -moz-opacity: 0.9;
   filter: alpha(opacity=9);
-  -webkit-box-shadow: 0px 5px 8px 0px #bbb; 
-  -moz-box-shadow: 0px 5px 8px 0px #bbb; 
+  -webkit-box-shadow: 0px 5px 8px 0px #bbb;
+  -moz-box-shadow: 0px 5px 8px 0px #bbb;
   box-shadow: 0px 5px 8px 0px #bbb;
 }
 header {
@@ -165,15 +165,15 @@ header {
   border-radius: 3px;
 }
 /* == SERIES DISPLAY == */
-#records { 
-	width: 30%; 
-	float: left; 
+#records {
+	width: 30%;
+	float: left;
 }
 #records ul {
 	list-style:none;
 	padding-left:0;
 }
-	#records li { 
+	#records li {
 		margin-bottom:5px;
 		padding-bottom:5px;
 		padding-left:5px;
@@ -226,22 +226,22 @@ footer {
   float: left;
   position: relative;
 }
-.social_column .icon { 
+.social_column .icon {
   display: block;
-  float: left; 
+  float: left;
   margin: 7px 5px 0 0;
   font-family: 'ModernPictogramsNormal';
-  font-size:43px; 
+  font-size:43px;
 }
 
 #licensing { padding-top: 20px; }
 
-.icon { 
-  font-family: 'ModernPictogramsNormal'; 
-  line-height:1em; 
+.icon {
+  font-family: 'ModernPictogramsNormal';
+  line-height:1em;
 }
 /* == Contact widget == */
-#avatar { with: 75px; height: 75px; float: left; margin-right:10px; border-radius: 3px; } 
+#avatar { with: 75px; height: 75px; float: left; margin-right:10px; border-radius: 3px; }
 
 /* == Twitter widget == */
 #twitter ul { list-style: none; padding-left: 0; }
@@ -259,7 +259,7 @@ footer {
 .hidden { display: none !important; visibility: hidden; }
 
 /* Hide only visually, but have it available for screenreaders: h5bp.com/v */
-.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 0.077em; margin: -0.077em; overflow: hidden; padding: 0; position: absolute; width: 0.077em; } 
+.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 0.077em; margin: -0.077em; overflow: hidden; padding: 0; position: absolute; width: 0.077em; }
 /* { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; } */
 
 /* Extends the .visuallyhidden class to allow the element to be focusable when navigated to via the keyboard: h5bp.com/p */
@@ -268,7 +268,7 @@ footer {
 /* Hide visually and from screenreaders, but maintain layout */
 .invisible { visibility: hidden; }
 
-/* Contain floats: h5bp.com/q */ 
+/* Contain floats: h5bp.com/q */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
@@ -293,7 +293,7 @@ footer {
    Print styles.
    Inlined to avoid required HTTP connection: h5bp.com/r
    ========================================================================== */
- 
+
 @media print {
 	* { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; border: 0 !important; } /* Black prints faster: h5bp.com/s */
 	a, a:visited { text-decoration: underline; }
@@ -312,5 +312,5 @@ footer {
 	footer,
 	#main_menu,
 	#login,
-	#thirty_years { display: none; }  
+	#thirty_years { display: none; }
 }
