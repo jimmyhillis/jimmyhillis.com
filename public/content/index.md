@@ -1,3 +1,60 @@
+## Hashing around
+### 19 December 2012
+
+Some funny issues arose from working within a large framework that included some hacky JavaScript today. This site had some JavaScript which added some variables to the end of every link on the page for *cache* reasons. I was to implement a simple tab user interface on a list of links with hash tags pointing to each tab content.
+
+When the tab interface went to grab the hash it would return the altered value `#this_tab_here?val=3136432772` which was stored in the markup. This meant that when looking for the element on the page jQuery would obviously find nothing matching that.
+
+Assuming we can't fix the extra variable issue (we can't, you know what it's like) one simple fix would be to update the markup to use a `data-` variable and save ourselves any tampering of data. This was an old HTML4 codebase so that was not valued and this option would require some extra markup bloat (no big deal) and as long as you leave the href="#this_tab_here" as well it won't break the tab content display in a non-JS environment. Great. That solution however is boring and wasn't possible given a few other restrictions.
+
+Alternatively we can write a function which grabs the `#hash` component from the HTML attribute regardless of the full URL. We're going to use JS' in-built ability to grab the hash from the `window.location` or an `<a>` for this and then run some fixes on it's somewhat broken implementation.
+
+    function _hash(url_string) {
+        var a = document.createElement('A');
+        a.href = url_string;
+        return a.hash.split('?')[0].split('&')[0];
+    }
+
+The function property will be an entire URL string made up of as much or as little of the URL as we can get. We might get `http://www.google.com/#this_tab_here?val=whatever` or something as simple as `?value=whatever#this_tab_here`. With that we build an A HTML element and setting the href value.
+
+Once we have that we can pull out the `hash` value which should be the end of it. Unfortunately if the URL string is a little messy and contains some other parts after it (like our examples) then it will be included in the hash like `#this_tab_here?val=whatever` - not done!
+
+To fix any instances where we have further variables we will simply use split on possible separators. That means good by `?` and `&` which are the only valid URL separators. We always grabbing the first element returned (as we know the string starts with #) thanks to returning `<a>.hash`.
+
+Simple function that solved some pretty annoying issues!
+
+## Wordpress shortcodes to the rescue
+### 6 September 2012
+
+The other day we were building a simple site for a client using Wordpress and required some simple markup to wrap around a block of copy. For someone who knows HTML this is trivially simple however when working with WP and any other client-facing-CMS having users who know HTML is highly unlikely. To get around this in Wordpress you can quickly and easily knock up some short codes that, while not beginner CMS level, allow users to simply add possibly complicated markup without realising.
+
+For the front-facing user they only need to enter:
+
+    [block title="This is a great block!"]I'd love to tell you about all the amazing content we have at the moment[/block]
+
+Which will allow us to build any HTML markup we want with those elements. To do so we load up our `functions.php` file in the theme we're building and go to it.
+
+    function block_shortcode($atts, $content="") {
+         extract(shortcode_atts(array(
+              'title' => false
+         ), $atts));
+
+        $html = "<div class=\"block\">" .
+            $html .= ($title) ? "<h2>$title</h2>" : "";
+                    $html .= "<div class=\"copy\">$content</div>";
+        $html .= "</div>";
+
+        return $html;
+
+    }
+    add_shortcode('block', 'block_shortcode');
+
+The code above is trivially simple, but perfect for this example. We knocked up a simple function which takes the attributes passed to the short code (in this case we're only using title, though you can have as many as you want) and the content which is passed as the short code method's second parameter (but remember it may not be passed at all!).
+
+The function itself simply runs extract to make all the `$attr` array variables local (which I'm not a fan of, but it's standard practice with these short codes. Another PHP-ism I guess… meh). After that we build the HTML markup with some more dirty PHP code. We at least check for an existing title before we use it.
+
+The last line is how we actually add the short code to the Wordpress instance. This method `add_shortcode` takes the short code name to use (e.g. `[block xxx]`) and the function to call when it's placed in users content. With that extremely simple code you can create some really nice user-functions without forcing them to understand any HTML themselves. Win win!
+
 ## Running with Twitter Bootstrap leaves me exahusted
 #### 24/June/2012
 
@@ -37,7 +94,7 @@ Unfortunately due to the way the classes are built in the Twitter Bootstrap you 
 
 To make your style specific enough to break this you are looking at .row-fluid .my-column-3 (at minimum) which is adding a coupling that means nothing and may actually confuse anyone reading the code. Big no no when thinking about CSS maintainence and modularization.
 
-I've decided, for the time being, to use a few !important tags (much against my better judgement) as I hope the lack of coupling is a little more helpful to me at this iteration. Hell, they're only going to be needed until I go through and refactor out all the Twitter Bootstrap code. 
+I've decided, for the time being, to use a few !important tags (much against my better judgement) as I hope the lack of coupling is a little more helpful to me at this iteration. Hell, they're only going to be needed until I go through and refactor out all the Twitter Bootstrap code.
 
 My overall feeling about Twitter Bootstrap? The gains in the short run are lost many time over in the long.
 
@@ -49,7 +106,7 @@ My overall feeling about Twitter Bootstrap? The gains in the short run are lost 
 I've started using JavaScript to to load my feeds (Twitter + Instagram) once the user is already reading the site. Once my standard JS initial complete (setting up UI & any user callbacks that are required) I throw off a few requests. To do this in a very trivial way you can use straight HTML and jQuery:
 
 	$(document).ready(function() {
-		
+
 	// Run all init functionality first
 		// ..
 
@@ -57,7 +114,7 @@ I've started using JavaScript to to load my feeds (Twitter + Instagram) once the
 		$('.last-fm-feed').load("/feed/lastfm", function() {
 			$('.last-fm-feed').slideDown();
 		});
-			
+
 	}
 
 In the above code I'm throwing a request back to my own server as I run my feed cache (as described in a previous blog post) to make sure I don't hit third party servers that often. The request will return some basic HTML which is pushed to the right location in the DOM.
@@ -83,10 +140,10 @@ To start with we need to define the connection and common schema in the app.js f
 
 	// Define common schema
 	var Schema = mongoose.Schema;
-	mongoose.model('Pages', new Schema({ 
-		'title': String, 
-		'copy': String, 
-		'order': Number 
+	mongoose.model('Pages', new Schema({
+		'title': String,
+		'copy': String,
+		'order': Number
 	}));
 	app.set('db', mongoose);
 
@@ -107,13 +164,13 @@ With this simple change we're allowing context to be passed into the controller 
 They now have access to db and app and we're good to go. Here's a quick example of using the db in a route to grab some content with Mongoose:
 
 	Pages = db.model('Pages');
-  Pages.findOne({ 'title' : 'Contact' }, 
-		function(err, this_page) { 
+  Pages.findOne({ 'title' : 'Contact' },
+		function(err, this_page) {
 			if (err) {
 				console.log("Loading content error");
 			}
 			content = _parseMarkdown(this_page.copy);
-			res.render('contact', 
+			res.render('contact',
 				{ title: this_page.title, content: content }
 			)
   });
@@ -138,10 +195,10 @@ To start with we need to define the connection and common schema in the app.js f
 
 	// Define common schema
 	var Schema = mongoose.Schema;
-	mongoose.model('Pages', new Schema({ 
-		'title': String, 
-		'copy': String, 
-		'order': Number 
+	mongoose.model('Pages', new Schema({
+		'title': String,
+		'copy': String,
+		'order': Number
 	}));
 	app.set('db', mongoose);
 
@@ -163,12 +220,12 @@ They now have access to db and app and we're good to go. Here's a quick example 
 
 	Pages = db.model('Pages');
 	Pages.findOne({ 'title' : 'Contact' },
-		function(err, this_page) { 
+		function(err, this_page) {
 			if (err) {
 				console.log("Loading content error");
 			}
 			content = _parseMarkdown(this_page.copy);
-			res.render('contact', 
+			res.render('contact',
 				{ title: this_page.title, content: content }
 			)
 		}
@@ -190,11 +247,11 @@ Once you've got access to it you have a wealth of system level functionality bui
 
 	fs.stat(cache_path, function(err, stat) {
 
-		// The file exists so we can compare 
+		// The file exists so we can compare
 		// when it was last updated
-		if (!err) {	
+		if (!err) {
 			cache_time = stat.mtime;
-			if ((now_time.getTime() - cache_time.getTime()) 
+			if ((now_time.getTime() - cache_time.getTime())
 				> res.app.settings['external_cache_time']) {
 					cache_overdue = true;
 			}
@@ -209,15 +266,15 @@ Once you've got access to it you have a wealth of system level functionality bui
 		}
 	});
 
-While it looks a little long-winded it's extremely simple code to follow. We check if the file exists by running a stat. If the file exists we then check if it's *too old* (which is a system level setting). If it's not too old we open the file and use the cache version. 
+While it looks a little long-winded it's extremely simple code to follow. We check if the file exists by running a stat. If the file exists we then check if it's *too old* (which is a system level setting). If it's not too old we open the file and use the cache version.
 
 Obviously if it's not there or it's overdue then you make a API call as per normal. The only difference is to save the file to the cache when you get a response:
-	
+
 	// Cache the file for future use
 	fs.writeFile(cache_path, data, function() {
 		console.log('Instagram cache saved!');
 	});
-	
+
 I'm going to convert all of this to a MongoDB in the next few days but for now it was a good test to see how easily you could deal with files using nodejs. You can see the full list of [fs functionality](nodejs.org/api/fs.html) on the [nodejs docs](http://nodejs.org/api/).
 
 ## I'm not a server guy.. normally!
@@ -248,7 +305,7 @@ I had a minor problem with nodejs not finding openssl (due to missing the pkg-co
 
 Voila! v8, nodejs, and npm all installed and ready for action.
 
-## Setting up Last.fm Feed with 
+## Setting up Last.fm Feed with
 
 I wanted to pull my Last.fm recently played list directly from the Last.FM API and display it as an aside on this site. To do this I wanted to use a nodejs package, if possible. Luckily there is a simple one that was created a few years back I found on NPM and [github](https://github.com/jammus/lastfm-node)
 
@@ -268,11 +325,11 @@ I then used the Last.FM package to make a request an dpull the results I was aft
 
 I've decided to write this blog purely with Markdown text (http://daringfireball.net/projects/markdown/) which has become a new love of mine over the last few months. It just allows me to worry about basic text without any formatting woes. If I want a few basic tools (lists, emphasis) I can do all of that easily, without any GUI.
 
-I'm using iA writer (http://itunes.apple.com/us/app/ia-writer/id439623248?mt=12) to do my writing as the GUI is extremely simple, it looks great, and it works on all of my devices (over iCloud or Dropbox) whrever I happen to be. 
+I'm using iA writer (http://itunes.apple.com/us/app/ia-writer/id439623248?mt=12) to do my writing as the GUI is extremely simple, it looks great, and it works on all of my devices (over iCloud or Dropbox) whrever I happen to be.
 
 I wanted to get the "blog" up and running on my website so I needed to be able to take a direct copy of the .md file (can even pull it from Dropbox, which I may implement soon) and push that out as formatted HTML.
 
-Node.js doesn't have any default Markdown support however there are plenty of tools already built. I happened across markdown-js first, so that's what I used. I don't imagine it's the best, but for now it's fine. 
+Node.js doesn't have any default Markdown support however there are plenty of tools already built. I happened across markdown-js first, so that's what I used. I don't imagine it's the best, but for now it's fine.
 
 Jade supports Markdown within it's filter system so you can easily do some basic Markdown to HTML formatting like so:
 
@@ -336,7 +393,7 @@ My current plans for the site:
 I decided after doing research to build my own personal blog and folio website using node.js. It was enough process to get it all up and running and a very basic template for my site setup. I've decided to do everything in a very agile method. My basic plan includes building a modular website that will allow me to add and swap content that I deem useful to ahve on my site. While it is a folio site at it's core, it's hardly the main feature. I want to allow myself to express what I'm currently learning as well as what I'm spending my time on. Initially I will have the following strcuture:
 
 1. *Folio*: A list of all the work that I'm proud of and willing to show off to the world.
-2. *Lab*: A list (and examples) of projects that I'm working on. It's my environment to quickly prototype and show off little things that take my fancy. 
+2. *Lab*: A list (and examples) of projects that I'm working on. It's my environment to quickly prototype and show off little things that take my fancy.
 3. *Timesinks*: My directly non-work related interestes which will include things like my last.fm feed, twitter, instagram and so forth. This section will likely change all the time.
 
 To get the project started I needed to install Node.js which was a simple matter of downloading and installing the Mac package from the website. This also gives me access to the NPM package system for installing more Node code. From here I installed express and a few other features to start my first experiement.
@@ -352,7 +409,7 @@ With express I was able to bootstrap my first site
 
 	$ node_modules/express/bin/express jimmy.hillis
 
-This method build my basic express app file stucture and enough code to get me started. From there I quickly did some reading on th express documentation (http://expressjs.com/guide.html) and built a few routes and a few views. 
+This method build my basic express app file stucture and enough code to get me started. From there I quickly did some reading on th express documentation (http://expressjs.com/guide.html) and built a few routes and a few views.
 
 To build a route was extremely simple and I was able to retrofit some code they already provided for a few more routes.
 
@@ -372,10 +429,10 @@ This will build some very simple markup:
 		</div>
 	</body>
 
-A few things I really like is the simple way of chaining class and id properties after the element. 
+A few things I really like is the simple way of chaining class and id properties after the element.
 
 	div#component.this-class.active
 
-Is very short and simple and straight to the point. 
+Is very short and simple and straight to the point.
 
 Having no need to closing tags (though you can manually close them yourself if you want) is a boon as well, saving a huge amount of time and effort. Using tabs and returns also forces the templater to write nicely formatting code.

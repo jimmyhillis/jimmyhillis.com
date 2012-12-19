@@ -1,1 +1,621 @@
-@import url('http://fonts.googleapis.com/css?family=Source+Code+Pro:300');@font-face{font-family:'sciflyregular';src:url('../fonts/scifly-sans/scifly-sans-webfont.eot');src:url('../fonts/scifly-sans/scifly-sans-webfont.eot?#iefix') format('embedded-opentype'),url('../fonts/scifly-sans/scifly-sans-webfont.woff') format('woff'),url('../fonts/scifly-sans/scifly-sans-webfont.ttf') format('truetype'),url('../fonts/scifly-sans/scifly-sans-webfont.svg#sciflyregular') format('svg');font-weight:normal;font-style:normal}@font-face{font-family:'equal-sans';src:url('../fonts/equal-sans/equalsans_demo-webfont.eot');src:url('../fonts/equal-sans/equalsans_demo-webfont.eot?#iefix') format('embedded-opentype'),url('../fonts/equal-sans/equalsans_demo-webfont.woff') format('woff'),url('../fonts/equal-sans/equalsans_demo-webfont.ttf') format('truetype'),url('../fonts/equal-sans/equalsans_demo-webfont.svg#equal_sans_demoregular') format('svg');font-weight:normal;font-style:normal}@font-face{font-family:'nevis';src:url('../fonts/nevis/nevis-webfont.eot');src:url('../fonts/nevis/nevis-webfont.eot?#iefix') format('embedded-opentype'),url('../fonts/nevis/nevis-webfont.woff') format('woff'),url('../fonts/nevis/nevis-webfont.ttf') format('truetype'),url('../fonts/nevis/nevis-webfont.svg#webfontbold') format('svg');font-weight:normal;font-style:normal}@font-face{font-family:'juraregular';src:url('../fonts/jura/jura-regular-webfont.eot');src:url('../fonts/jura/jura-regular-webfont.eot?#iefix') format('embedded-opentype'),url('../fonts/jura/jura-regular-webfont.woff') format('woff'),url('../fonts/jura/jura-regular-webfont.ttf') format('truetype'),url('../fonts/jura/jura-regular-webfont.svg#juraregular') format('svg');font-weight:normal;font-style:normal}article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block}audio,canvas,video{display:inline-block;*display:inline;*zoom:1}audio:not([controls]){display:none;height:0}[hidden]{display:none}html{font-size:100%}a:active,a:hover{outline:0}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0;white-space:normal;*margin-left:-7px}button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle}button,input{line-height:normal}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer;*overflow:visible}button[disabled],input[disabled]{cursor:default}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0;*height:13px;*width:13px}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}body{font-size:15px;line-height:1.5em;font-family:'juraregular',sans-serif;color:#000}p{margin:0 0 1em 0}hr{border-top:1px dotted #ccc;padding:1em 0;margin:2em 0 0 0}sup,sub{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}ins{background-color:#fffb88}del{text-decoration:line-through}s{color:#ccc;text-decoration:line-through}mark{background-color:#fffb88;color:inherit;font-weight:normal}small{font-weight:normal;font-style:normal}strong,b{font-weight:bold}em,i{font-style:italic}dfn,abbr{font-style:inherit;position:relative}hgroup{position:relative}h1,h2,h3,h4,h5,h6{font-size:1.5em;line-height:1.15em;font-weight:normal;margin:1em 0 .5em 0;position:relative;clear:both;font-family:'equal-sans',Helvetica,sans-serif}h1{font-size:4em;text-transform:uppercase}h2{font-size:3em;margin:1em 0 0 0;border-bottom:solid 1px grey}hgroup{margin:0 0 1em 0}hgroup h1,hgroup h2,hgroup h3{margin:0}ul,ol,dl{margin:0 0 1em 2em;padding:0}ul li,ol li{margin:0 0 .25em 0}ul{list-style:disc outside}ul ul{margin:.25em 0 .5em 1em}ol{list-style:decimal outside}ol ol{margin:.25em 0 .5em 1.5em;list-style-type:lower-roman}dl{margin-left:0}dt{font-weight:bold;margin:0 0 .5em 0;padding:1em 0 0 0}dd{margin:0 0 .5em 0}blockquote{margin:0 0 2em 0;padding:1em 0 0 0}blockquote>p{color:#000;padding:0 1em;font-size:1.6em}blockquote footer{display:block;margin:.5em 0 0 0;padding:0 0 0 1em 0}q{font-style:italic;color:inherit}cite{font-style:italic}pre{white-space:pre;overflow:auto;margin:2em -2em 2em -2em;padding:2em;background:#333;color:#fff;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}code,samp,kbd{display:inline-block;font-size:.9em;font-family:'Source Code Pro',sans-serif;opacity:.9}var{font-style:italic;font-weight:bold}a,a:link,a:visited{color:inherit;text-decoration:none}a:hover{color:inherit}a:active{color:inherit;text-decoration:underline}::selection{color:#fff;background:#24c0eb}::-moz-selection{color:#fff;background:#24c0eb}form{position:relative;margin:0 0 1em 0}fieldset{margin:0 0 2.5em 0}legend{margin:0 0 .25em 0;font-size:1.14em;padding:0 0 1em 0}label{display:block;margin:0 0 .25em 0}button:hover{cursor:pointer}form ol{margin:0;list-style:none}form li{position:relative}input,textarea{display:block;width:auto;margin:0 0 1em 0;padding:.5em 15px;font-size:1em;line-height:1.3em;width:100%;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;color:#000}figure{margin:0 0 1em 0}figure img{margin-bottom:0}img{display:block;max-width:100%;border:0;margin:0 0 1em 0}.visual-hide{text-indent:-90000px;height:0;position:absolute;overflow:hidden}.hide{display:none}.clear{clear:both;display:block}.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}.clearfix{display:inline-block}/*\*/* html .clearfix{height:1%}.clearfix{display:block}/**/.replaced{display:block;text-indent:-900000px;overflow:hidden;background-color:transparent;background-repeat:no-repeat;background-position:top left}body{margin:0}#wrapper{max-width:960px;margin:0 auto;padding:0 5%}nav ul{margin:1em 0;list-style:none}nav ul li{float:left;padding:0 .5em}.primary-nav{padding:0;margin:0}.primary-nav ul{height:40px;float:left}.primary-nav ul a{color:#fff;line-height:40px;vertical-align:middle;text-transform:uppercase}.primary-nav ul a:hover{color:#333}.page-navigation{background:#24c0eb}.social-media{background:#333}.social-media li a{font-size:.8em;color:#fff}.social-media li a:hover{color:#24c0eb}.colophon{margin-top:40px;padding-top:20px;border-top:solid 1px #333}
+@import url('http://fonts.googleapis.com/css?family=Source+Code+Pro:300');
+/*================
+Styles for screen and print
+Version 3.0
+Author: Hatchd
+Created: 02.08.2012
+==================*/
+@font-face {
+  font-family: 'sciflyregular';
+  src: url('../fonts/scifly-sans/scifly-sans-webfont.eot');
+  src: url('../fonts/scifly-sans/scifly-sans-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/scifly-sans/scifly-sans-webfont.woff') format('woff'), url('../fonts/scifly-sans/scifly-sans-webfont.ttf') format('truetype'), url('../fonts/scifly-sans/scifly-sans-webfont.svg#sciflyregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'equal-sans';
+  src: url('../fonts/equal-sans/equalsans_demo-webfont.eot');
+  src: url('../fonts/equal-sans/equalsans_demo-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/equal-sans/equalsans_demo-webfont.woff') format('woff'), url('../fonts/equal-sans/equalsans_demo-webfont.ttf') format('truetype'), url('../fonts/equal-sans/equalsans_demo-webfont.svg#equal_sans_demoregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'nevis';
+  src: url('../fonts/nevis/nevis-webfont.eot');
+  src: url('../fonts/nevis/nevis-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/nevis/nevis-webfont.woff') format('woff'), url('../fonts/nevis/nevis-webfont.ttf') format('truetype'), url('../fonts/nevis/nevis-webfont.svg#webfontbold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'juraregular';
+  src: url('../fonts/jura/jura-regular-webfont.eot');
+  src: url('../fonts/jura/jura-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/jura/jura-regular-webfont.woff') format('woff'), url('../fonts/jura/jura-regular-webfont.ttf') format('truetype'), url('../fonts/jura/jura-regular-webfont.svg#juraregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/*
+normalize.css 2012-07-07T09:50 UTC - http://github.com/necolas/normalize.css
+*/
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section,
+summary {
+  display: block;
+}
+audio,
+canvas,
+video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+[hidden] {
+  display: none;
+}
+html {
+  font-size: 100%;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+/*
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+/*
+ * 1. Corrects color not being inherited in IE6/7/8/9.
+ * 2. Corrects text not wrapping in FF3.
+ * 3. Corrects alignment displayed oddly in IE6/7.
+ */
+legend {
+  border: 0;
+  /* 1 */
+
+  padding: 0;
+  white-space: normal;
+  /* 2 */
+
+  *margin-left: -7px;
+  /* 3 */
+
+}
+/*
+ * 1. Corrects font size not being inherited in all browsers.
+ * 2. Addresses margins set differently in IE6/7, FF3+, S5, Chrome.
+ * 3. Improves appearance and consistency in all browsers.
+ */
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  /* 1 */
+
+  margin: 0;
+  /* 2 */
+
+  vertical-align: baseline;
+  *vertical-align: middle;
+  /* 3 */
+
+}
+/*
+ * Addresses FF3/4 setting `line-height` on `input` using `!important` in the
+ * UA stylesheet.
+ */
+button,
+input {
+  line-height: normal;
+}
+/*
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Corrects inability to style clickable `input` types in iOS.
+ * 3. Improves usability and consistency of cursor style between image-type
+ *    `input` and others.
+ * 4. Removes inner spacing in IE7 without affecting normal text inputs.
+ *    Known issue: inner spacing remains in IE6.
+ */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+
+  cursor: pointer;
+  /* 3 */
+
+  *overflow: visible;
+  /* 4 */
+
+}
+/*
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+input[disabled] {
+  cursor: default;
+}
+/*
+ * 1. Addresses box sizing set to content-box in IE8/9.
+ * 2. Removes excess padding in IE8/9.
+ * 3. Removes excess padding in IE7.
+ *    Known issue: excess padding remains in IE6.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+
+  padding: 0;
+  /* 2 */
+
+  *height: 13px;
+  *width: 13px;
+  /* 3 */
+
+}
+/*
+ * 1. Addresses `appearance` set to `searchfield` in S5, Chrome.
+ * 2. Addresses `box-sizing` set to `border-box` in S5, Chrome (include `-moz`
+ *    to future-proof).
+ */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+
+  box-sizing: content-box;
+}
+/*
+ * Removes inner padding and search cancel button in S5, Chrome on OS X.
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+/*
+ * Removes inner padding and border in FF3+.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+/*
+ * 1. Removes default vertical scrollbar in IE6/7/8/9.
+ * 2. Improves readability and alignment in all browsers.
+ */
+textarea {
+  overflow: auto;
+  /* 1 */
+
+  vertical-align: top;
+  /* 2 */
+
+}
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/*
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+body {
+  font-size: 15px;
+  line-height: 1.5em;
+  font-family: 'juraregular', sans-serif;
+  color: #000000;
+}
+p {
+  margin: 0 0 1em 0;
+}
+hr {
+  border-top: 1px dotted #cccccc;
+  padding: 1em 0;
+  margin: 2em 0 0 0;
+}
+sup,
+sub {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+ins {
+  background-color: #fffb88;
+}
+del {
+  text-decoration: line-through;
+}
+s {
+  color: #cccccc;
+  text-decoration: line-through;
+}
+mark {
+  background-color: #fffb88;
+  color: inherit;
+  font-weight: normal;
+}
+small {
+  font-weight: normal;
+  font-style: normal;
+}
+strong,
+b {
+  font-weight: bold;
+}
+em,
+i {
+  font-style: italic;
+}
+dfn,
+abbr {
+  font-style: inherit;
+  position: relative;
+}
+hgroup {
+  position: relative;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1.5em;
+  line-height: 1.15em;
+  font-weight: normal;
+  margin: 1em 0 0.5em 0;
+  position: relative;
+  clear: both;
+  font-family: 'equal-sans', Helvetica, sans-serif;
+}
+h1 {
+  font-size: 4em;
+}
+h2 {
+  font-size: 3em;
+  margin: 1em 0 0 0;
+  border-bottom: solid 1px grey;
+  margin: 0 2em;
+  text-align: center;
+}
+hgroup {
+  margin: 0 0 1em 0;
+}
+hgroup h1,
+hgroup h2,
+hgroup h3 {
+  margin: 0;
+}
+ul,
+ol,
+dl {
+  margin: 0 0 1em 2em;
+  padding: 0;
+}
+ul li,
+ol li {
+  margin: 0 0 0.25em 0;
+}
+ul {
+  list-style: disc outside;
+}
+ul ul {
+  margin: 0.25em 0 0.5em 1em;
+}
+ol {
+  list-style: decimal outside;
+}
+ol ol {
+  margin: 0.25em 0 0.5em 1.5em;
+  list-style-type: lower-roman;
+}
+dl {
+  margin-left: 0;
+}
+dt {
+  font-weight: bold;
+  margin: 0 0 0.5em 0;
+  padding: 1em 0 0 0;
+}
+dd {
+  margin: 0 0 0.5em 0;
+}
+blockquote {
+  margin: 0 0 2em 0;
+  padding: 1em 0 0 0;
+}
+blockquote > p {
+  color: #000000;
+  padding: 0 1em;
+  font-size: 1.6em;
+}
+blockquote footer {
+  display: block;
+  margin: 0.5em 0 0 0;
+  padding: 0 0 0 1em 0;
+}
+q {
+  font-style: italic;
+  color: inherit;
+}
+cite {
+  font-style: italic;
+}
+pre {
+  white-space: pre;
+  overflow: auto;
+  margin: 2em -2em 2em -2em;
+  padding: 2em;
+  background: #333333;
+  color: #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+pre code {
+  border: none;
+}
+code {
+  padding: 0 4px;
+  border: solid 1px #cccccc;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  line-height: 1.3em;
+}
+code,
+samp,
+kbd {
+  display: inline-block;
+  font-size: 0.9em;
+  font-family: 'Source Code Pro', sans-serif;
+  opacity: 0.9;
+}
+var {
+  font-style: italic;
+  font-weight: bold;
+}
+/*================
+Links
+==================*/
+a,
+a:link,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  color: inherit;
+}
+a:active {
+  color: inherit;
+  text-decoration: underline;
+}
+::selection {
+  color: #ffffff;
+  background: #24c0eb;
+}
+::-moz-selection {
+  color: #ffffff;
+  background: #24c0eb;
+}
+/*================
+Form elements
+==================*//*Set global constants*/
+form {
+  position: relative;
+  margin: 0 0 1em 0;
+}
+fieldset {
+  margin: 0 0 2.5em 0;
+}
+legend {
+  margin: 0 0 0.25em 0;
+  font-size: 1.14em;
+  padding: 0 0 1em 0;
+}
+label {
+  display: block;
+  margin: 0 0 0.25em 0;
+}
+button:hover {
+  cursor: pointer;
+}
+/*
+	Set styles for full forms
+	(sets of inputs/labels should always be encased in an ordered list for example)
+	*/form ol {
+  margin: 0;
+  list-style: none;
+}
+form li {
+  position: relative;
+}
+input,
+textarea {
+  display: block;
+  width: auto;
+  margin: 0 0 1em 0;
+  padding: 0.5em 15px;
+  font-size: 1em;
+  line-height: 1.3em;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  color: #000000;
+}
+/*================
+Images
+==================*/
+figure {
+  margin: 0 0 1em 0;
+}
+figure img {
+  margin-bottom: 0;
+}
+img {
+  display: block;
+  max-width: 100%;
+  border: 0;
+  margin: 0 0 1em 0;
+}
+.visual-hide {
+  text-indent: -90000px;
+  height: 0;
+  position: absolute;
+  overflow: hidden;
+}
+.hide {
+  display: none;
+}
+.clear {
+  clear: both;
+  display: block;
+}
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clearfix {
+  display: inline-block;
+}
+/* Start commented backslash hack \*/
+* html .clearfix {
+  height: 1%;
+}
+.clearfix {
+  display: block;
+}
+/* Close commented backslash hack */
+.replaced {
+  display: block;
+  text-indent: -900000px;
+  overflow: hidden;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: top left;
+}
+body {
+  margin: 0;
+  background: #ffffff url(../images/plaid.png);
+  border-top: solid 42px #333333;
+}
+#wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 5%;
+  position: relative;
+}
+nav ul {
+  margin: 1em 0;
+  list-style: none;
+}
+nav ul li {
+  float: left;
+  padding: 0 0.5em;
+}
+.page-title {
+  margin: 20px 0 0 -3%;
+}
+.page-navigation {
+  background: #24c0eb;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
+.primary-nav {
+  padding: 0;
+  margin: 0;
+}
+.primary-nav ul {
+  width: 60%;
+  height: 40px;
+  float: left;
+  padding: 0 20%;
+}
+.primary-nav ul li {
+  display: block;
+  float: left;
+  width: 25%;
+  padding: 0;
+  margin: 0;
+}
+.primary-nav ul a {
+  display: block;
+  text-align: center;
+  color: #ffffff;
+  line-height: 40px;
+  vertical-align: middle;
+}
+.primary-nav ul a:hover {
+  color: #333333;
+}
+.social-media {
+  position: absolute;
+  top: -62px;
+  right: 0;
+}
+.social-media ul {
+  margin: 0;
+  padding: 0;
+}
+.social-media li {
+  float: left;
+  padding: 0 20px;
+}
+.social-media a {
+  line-height: 40px;
+  font-size: 0.8em;
+  color: #ffffff;
+}
+.social-media a:hover {
+  color: #24c0eb;
+}
+.copy {
+  margin-top: 2em;
+}
+.colophon {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: solid 1px #333333;
+}
+@media print {
+  
+}

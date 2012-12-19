@@ -10,10 +10,18 @@ pre{
     background:@black;
     color:@white;
 	.box-sizing;
+    code{
+        border:none;
+    }
+}
+code{
+    padding:0 4px;
+    border:solid 1px lighten(@black, 60);
+    .border-radius(2px);
+    line-height:1.3em;
 }
 code,samp,kbd{
 	display:inline-block;
-    // padding:0.5em;
     font-size:0.9em;
     font-family: 'Source Code Pro', sans-serif;
     opacity:0.9;

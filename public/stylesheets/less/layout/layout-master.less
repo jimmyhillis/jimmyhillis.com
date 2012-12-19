@@ -9,12 +9,15 @@
 	body{
 		margin:0;
         // background:url(../images/cuben-bg.jpg);
+        background:white url(../images/plaid.png);
+        border-top:solid 42px @black;
 	}
 
     #wrapper{
         max-width:960px;
         margin:0 auto;
         padding:0 5%;
+        position:relative;
     }
 
     nav ul{
@@ -26,35 +29,66 @@
         }
     }
 
-    .primary-nav{
-        padding:0;
-        margin:0;
-        ul{
-            height:40px;
-            float:left;
-            a{
-                color:@white;
-                line-height:40px;
-                vertical-align:middle;
-                text-transform:uppercase;
-                &:hover{
-                    color:@black;
-                }
-            }
-        }
+    .page-title{
+        margin: 20px 0 0 -3%;
+        // text-align:center;
     }
     .page-navigation{
         background:@col-babyblue;
+        .border-radius(2px);
     }
+        .primary-nav{
+            padding:0;
+            margin:0;
+            ul{
+                width:60%;
+                height:40px;
+                float:left;
+                padding:0 20%;
+                li{
+                    display:block;
+                    float:left;
+                    width:25%;
+                    padding:0;
+                    margin:0;
+                }
+                a{
+                    display:block;
+                    text-align:center;
+                    color:@white;
+                    line-height:40px;
+                    vertical-align:middle;
+                    &:hover{
+                        color:@black;
+                    }
+                }
+            }
+        }
+
     .social-media {
-        background:@black;
-        li a{
+        position: absolute;
+        top:-62px;
+        right:0;
+        ul{
+            margin:0;
+            padding:0;
+        }
+        li{
+            float:left;
+            padding:0 20px;
+        }
+        a{
+            line-height:40px;
             font-size:0.8em;
             color:@white;
             &:hover{
                 color:@col-babyblue;
             }
         }
+    }
+
+    .copy{
+        margin-top:2em;
     }
 
     .colophon{
