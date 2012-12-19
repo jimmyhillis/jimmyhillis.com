@@ -11,7 +11,7 @@ var express = require('express')
 
 var app = module.exports = express.createServer();
 
-// == CONFIG == //
+// Server configation
 
 app.configure(function() {
     app.set('views', __dirname + '/views');
@@ -39,28 +39,43 @@ app.configure('production', function(){
     app.use(express.errorHandler());
 });
 
-// == DATABASE == //
+// Database connection
 
 mongoose.connect('mongodb://localhost/jimmy-hillis-me', function(err) {
     if (err) {
-        console.log("Failed to connect to MongoDB");
+        console.log('Failed to connect to MongoDB');
     }
 });
+
 // Log success cases for testing purposes
-mongoose.connection.on("open", function() {
-    console.log("mongodb is connected");
+mongoose.connection.on('open', function() {
+    console.log('mongodb is connected');
 });
 
-// == MODELS == //
+// Model definitions
 
-var Schema = mongoose.Schema;
-mongoose.model('pages', new Schema({ 'title': String, 'copy': String, 'order': Number }));
-mongoose.model('posts', new Schema({ 'title': String, 'date': String, 'copy': String }));
+mongoose.model(
+    'pages',
+    new mongoose.Schema({
+       'name': String,
+       'title': String,
+       'copy': String,
+       'order': Number
+    }));
+
+mongoose.model(
+    'posts',
+    new mongoose.Schema({
+        'name': String,
+        'title': String,
+        'date': String,
+        'copy': String
+    }));
+
 app.set('db', mongoose);
 
-// == ROUTING == //
+// Routes
 
-// Content page routes
 routes = routes(app);
 app.get('/', routes.index);
 app.get('/lab', routes.lab);
@@ -70,26 +85,15 @@ app.get('/contact', routes.contact);
 // Blog routes
 posts = posts(app);
 app.get('/post.:format?', posts.list);
-//app.post('/post.:format?', blogroutes.create);
-//app.get('/post/:id.:format?', blogroutes.read);
+app.post('/post.:format?', posts.create);
+app.get('/post/:id.:format?', posts.read);
 //app.del('/post/:id.:format?', blogroutes.delete);
 //app.put('/post.:format?', blogroutes.update);
-
-// Feed routes
-// app.get('/feed/instagram.:format?', feeds.cache, feeds.instagram);
-// app.get('/feed/lastfm.:format?', feeds.cache, feeds.lastfm);
 
 // 404 error page
 app.use(function(req,res) {
 	res.render('404', { 'title': 'Page Not Found' });
 });
-
-// Middleware auth method
-function authUser(req, res, next) {
-    var url = require('url');
-    url = req.urlp = urlparser.parse(req.url, true);
-    console.log(url);
-}
 
 app.listen(3000, function(){
     console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

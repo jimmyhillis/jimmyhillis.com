@@ -1,4 +1,15 @@
-h1 Current Posts
+.current
+	h2 Current Posts
 
-each post in posts
-    li= post.title
+	each post in posts
+		li= post.title + ' ' + post.date
+
+.new
+	h2 New Post
+
+	form.new-post(action='', name='new-post', method='post')
+		input(type='text', name='name')
+		input(type='text', name='title')
+		input(type='date', name='date')
+		textarea(name='copy')
+		input(type='submit', name='add', value='Add Post')
