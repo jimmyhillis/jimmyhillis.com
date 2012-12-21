@@ -413,7 +413,7 @@ Links
 a,
 a:link,
 a:visited {
-  color: inherit;
+  color: #24c0eb;
   text-decoration: none;
 }
 a:hover {
