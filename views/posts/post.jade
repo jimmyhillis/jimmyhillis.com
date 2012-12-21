@@ -1,5 +1,6 @@
-h1= post.title
-.date
-	#{post.date}
-.copy
-	!{post.html}
+extends ../base
+
+block copy
+	h1.post-title #{post.title}
+	.date #{post.date}
+	.copy !{post.html}

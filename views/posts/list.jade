@@ -1,15 +1,14 @@
-.current
-	h2 Current Posts
+extends ../base
 
-	each post in posts
-		li= post.title + ' ' + post.date
-
-.new
-	h2 New Post
-
-	form.new-post(action='', name='new-post', method='post')
-		input(type='text', name='name')
-		input(type='text', name='title')
-		input(type='date', name='date')
-		textarea(name='copy')
-		input(type='submit', name='add', value='Add Post')
+block copy
+	.current
+		h2 Current Posts
+		ul
+			each post in posts
+				li
+					a(href='post/#{post.name}') #{post.title} #{post.date}
+					a.icon-delete(href='post/#{post.name}?_method=delete'): span [delete]
+	block edit
+		.new
+			h2 New Post
+			include form
