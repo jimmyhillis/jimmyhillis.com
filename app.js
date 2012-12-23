@@ -8,7 +8,8 @@ var express = require('express')
   , routes = require('./routes')
   , posts = require('./routes/posts')
   , feeds = require('./routes/feeds')
-  , path = require('path');
+  , path = require('path')
+  , passport = require('passport');
 
 // Build express application
 
@@ -27,20 +28,21 @@ app.configure(function() {
 
     app.use(express.logger('dev'));
 
+    app.use(express.cookieParser());
+    app.use(express.session({ secret: 'testing secret man' }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     var static = path.join(__dirname, 'public');
     app.use(express.static(static));
-    app.get(/\/js/, express.static(path.join(static,'js')));
-    app.get(/\/css/, express.static(path.join(static,'css')));
-    app.get(/\/images/, express.static(path.join(static,'images')));
-
-    // app.use(express.static(__dirname + '/public'));
+    // app.get(/\/js/, express.static(path.join(static,'js')));
+    // app.get(/\/css/, express.static(path.join(static,'css')));
+    // app.get(/\/images/, express.static(path.join(static,'images')));
 
     // Enable JSONP for my feeds
     // app.set('jsonp callback', true);
     // app.set('cache', __dirname + '/cache');
     // app.set('external_cache_time', 600000);
-
-    // app.use(app.router);
 });
 
 app.configure('development', function() {
@@ -80,7 +82,53 @@ mongoose.model(
         'copy': String
     }));
 
+mongoose.model(
+    'users',
+    new mongoose.Schema({
+        'username': String,
+        'email': String,
+        'password': String
+    }));
+
+User = mongoose.model('users');
+User.prototype.validPassword = function (password) {
+    if (this.password === password) {
+        return true;
+    }
+};
+
 app.set('db', mongoose);
+
+// Configure authentication with passport
+
+var LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+        if (err) {
+            return done(err);
+        }
+        if (!user) {
+            return done(null, false, { message: 'Incorrect username.' });
+        }
+        if (!user.validPassword(password)) {
+            return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+    });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
+});
 
 // Routes
 
@@ -90,15 +138,35 @@ app.get('/lab', routes.lab);
 app.get('/music', routes.music);
 app.get('/contact', routes.contact);
 
+// Authentication
+
+var auth = {
+    'login': function (req, res) {
+        res.render('login');
+    },
+    'cms': function (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.redirect('/login');
+        }
+        return next();
+    }
+};
+
+app.get('/login', auth.login);
+app.post('/login',
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    }));
+
 // Blog routes
 
 posts = posts(app);
-app.get('/post.:format?', posts.list);
-app.post('/post.:format?', posts.create);
-app.get('/post/:id.:format?', posts.read);
-app.get('/post/:id/edit.:format?', posts.edit);
-app.del('/post/:id.:format?', posts.remove);
-app.put('/post.:format?', posts.update);
+app.get('/post.:format?', auth.cms, posts.list);
+app.get('/post/:id.:format?', auth.cms, posts.read);
+app.get('/post/:id/edit.:format?', auth.cms, posts.edit);
+app.del('/post/:id.:format?', auth.cms, posts.remove);
+app.put('/post.:format?', auth.cms, posts.update);
 
 // 404 error page
 
