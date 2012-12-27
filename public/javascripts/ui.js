@@ -1,109 +1,45 @@
+/**!
+ *
+ * REQUIRED
+ * @required jquery v1.8+
+ *
+ * IMPORTS
+ * @codekit-prepend "prettify/prettify.js"
+ *
+ * VALIDATION
+ * All code must validate with JSHint (http://www.jshint.com/) to be launched
+ * within a LIVE web application. NO debug code should remain in your final
+ * versions e.g. remove EVERY reference to window.console.log().
+ *
+ * STYLE
+ * All code should be within 79 characters WIDE to meet standard Hatchd
+ * protocol. Reformat code cleanly to fit within this tool.
+ *
+ * jshint = { "laxcomma": true, "laxbreak": true, "browser": true }
+ *
+ * @author Jimmy Hillis <jimmy@hillis.me>
+ *
+ */
+
 $(document).ready(function() {
 
-	/**
-	 * Setup pretty paint colors for my code, without actually
-	 * having any markup in the .MD files. Just run through and
-	 * add them before loading the called 
-	 */
-	
-	$('.content code').addClass('prettyprint');
+    // Color code on my pages, with CSS stored in my standard files. Due to
+    // the way my content markup is built using markdown I need to run some
+    // JS to apply to correct classes before we can run the styler, no
+    // big deal as it wont work without JS anyway!
+	$('pre code').addClass('prettyprint');
 	prettyPrint();
 
-	/**
-	 * Load UI with user requests
-	 */
-
-/*
-	$('.widget').hide();
-	$('.social-media-item a').on('click', function() {
-
-		var element_id = '#' + $(this).attr('data-widget');
-
-		/* Slide down whatever is currently open to save some space for now * /
-		$('.widget:visible').not(element_id).hide();
-		$('#'+$(this).attr('data-widget')).fadeIn(150);
-		return false;
-	});
-*/
-
-	// INSTAGRAM LATEST PHOTOS
-
-	var appendPhotos = function appendPhotos(photos) {
-
-		var $instagram_feed = $('.instagram-feed')
-			, $photo_list = $('<ul></ul>')
-					.addClass('instagram-photos') // list of all photos to build before adding
-			, $photo // single photo li element
-			, $image // photo element to add to stream
-			, i // iterator for the loop
-		;
-
-		if (photos.length) {
-
-			photos = photos.reverse();
-			for (i = photos.length - 1; i > 0; i--) {
-				//console.log(photos[i].images.thumbnail.url);
-				$photo = $('<img />').addClass('instagram-photo').attr('src', photos[i].images.thumbnail.url);
-				$photo_list.append($('<li></li>').append($photo));
-			}
-
-			$instagram_feed.append($photo_list);
-
-		}
-
-	}
-
-	loadJSONP("/feed/instagram.json", appendPhotos);
-
-	// LAST.FM RECENTLY PLAYED LIST
-
-	var appendPlays = function appendPlays(plays) {
-
-		var $lastfm_feed = $('.last-fm-feed')
-			, $plays_list = $('<ul></ul>').addClass('last-fm-plays') // the list of plays you can append to your HTML
-			, $play // a specific play li element
-			, i // the iterator for the for loop
-		;
-
-		if (plays.length) {
-
-			for (i = plays.length - 1; i > 0; i--) {
-				$play = $('<li></li>')
-					.addClass('last-fm-play')
-						.text(plays[i]);
-				$plays_list.append($play);
-			}
-
-			$lastfm_feed.append($plays_list);
-
-		}
-
-	}
-
-	// Load LAST.FM RECENT TRACKS LIST
-	loadJSONP("/feed/lastfm.json", appendPlays);
-
-	$('.delete').live('click', function() {
-		if (confirm('Are you sure you want to delete that item?')) {
-			var element = $(this)
-				, form = $('<form></form>');
-			form.attr({
-				method: 'POST',
-				action: element.attr('href')
-			})
-			.hide()
-			.append('<input type="hidden" />')
-			.find('input')
-			.attr({
-				'name': '_method',
-				'value': 'delete'
-			})
-			.end()
-			.submit();
-		}
-		return false;
-	});
-
-
-
+    // Run Disqus script to setup commenting on any page that has the
+    // required markup.
+    if ($('#disqus_thread').length) {
+        var disqus_shortname = 'jimmyhillis'
+          , disqus_developer = 1
+          , disqus_title = 'Try me!';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    }
 });
