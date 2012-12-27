@@ -1,4 +1,7 @@
-h1.content= title
-div#copy.content
-	p Welcome to #{title}
-	p I've never uesd Jade but it looks simple enough
+extends base
+
+block copy
+	h1.content #{title}
+	#copy.content
+		p Welcome to #{title}
+		p I've never uesd Jade but it looks simple enough

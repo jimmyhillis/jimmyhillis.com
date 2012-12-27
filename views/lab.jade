@@ -1,4 +1,42 @@
-.page-inner.page-lab
-	h1.article-title
-		#{title} 
-	!{content}
+extends base
+
+block copy
+	h1.p-title #{title}
+	.p-copy.clearfix
+		:markdown
+			Welcome to my lab. A collection of past, present and future projects or tidbits of code and color. Any code, that I'm allowed to share, will be on my [GitHub](//github.com/jimmyhillis) account and can be toyed with and critiqued.
+
+			Consider everything here a work-in-progress, but then isn't every code project?
+
+		.column
+			:markdown
+				## Maptack.js
+				A Google Map tool which allows you to find the coordinates of any
+				point on the planet by clicking. It also builds a log which is easy
+				for exporting to use in some Google Map (or any map based) project
+				else where. Really useful when you know a point, but don't have an
+				address or require a long path that can only be built by eye.
+
+				[View on GitHub](//github.com/jimmyhillis/maptack)
+
+				JavaScript, jQuery, HTML, GoogleMaps
+
+
+
+				## Comicbox.js
+				A vanilla JavaScript learning tool in the form of a *completely*
+				client-side collection tool. It allows you to enter and manage a your
+				longboxes of comics without ever talking to a server.
+
+				//- [View on GitHub](//github.com/jimmyhillis/maptack)
+
+				JavaScript, HTML
+
+		.column
+			:markdown
+				## jquery.inputtoggle
+				This simple plugin allows you to have placeholder functionality in all browsers by doing a fallback that uses JavaScript to set and unset the default value for a field.
+
+				[View on GitHub](//github.com/jimmyhillis/jquery.inputToggle)
+
+				JavaScript, jQuery

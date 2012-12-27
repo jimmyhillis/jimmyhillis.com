@@ -1,4 +1,15 @@
-.page-inner.page-contact
-	h1.article-title 
-		#{title} 
-	!{content}
+extends base
+
+block copy
+	h1.p-title #{title}
+	.p-copy.clearfix
+		.column
+			:markdown
+				I live & work in Perth, Australia. It's never really cold. It
+				never really rains. I ride my bike to work and enjoy every cool
+				morning we get. If you want to get a hold of me just tweet
+				me [@ppjim3](//www.twitter.com/#!ppjim3).
+
+		.column.profile-images
+			img.avatar(alt='Jimmy Hillis', src='/images/avatar.jpg')
+			img(src='http://distilleryimage3.s3.amazonaws.com/6d969b60473911e28ed122000a9f1311_7.jpg')

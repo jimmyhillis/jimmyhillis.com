@@ -14,24 +14,27 @@ html.no-js(lang='en')
 		meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
 		meta(name='viewport', content='width=device-width')
 		link(rel='stylesheet', href='/stylesheets/styles.css')
-		script(src='/javascripts/libs/modernizr-2.5.3.min.js')
-		body
+		//- script(src='/javascripts/libs/modernizr-2.5.3.min.js')
+		- var body_class = body_class || ''
+		body(class=body_class)
 			#wrapper
 				block header
 					header.page-header
 						h1.page-title
-							a(href='/') jimmy-hillis-me
-						small.page-subtitle I dev, read, and play music (though not always in that order).
+							a(href='/') jimmy-hillis
+						small.page-subtitle Code, books, and music, though not always in that order.
+
 					nav.primary-nav.clearfix
 						ul.page-navigation
 							li
 								a.nav-link(href='/') blog
 							li
-								a.nav-link(href='/lab') lab
-							li
 								a.nav-link(href='/music') music
 							li
+								a.nav-link(href='/lab') lab
+							li
 								a.nav-link(href='/contact') contact
+
 					nav.social-media
 						ul
 							li
@@ -39,51 +42,56 @@ html.no-js(lang='en')
 							li
 								a(href='//instagr.am/jimmyhillis', data-widget='feed-instagram').instagram Instagram
 							li
-								a(href='//last.fm/user/ppjim3', data-widget='feed-lastfm').last-fm Last.FM
+								a(href='//last.fm/user/ppjim3', data-widget='feed-lastfm').last-fm Last.fm
 
-				div.copy
-					block copy
-						!{body}
-
-				footer
-					block footer
-						.colophon
-							:markdown
-								This website was created by Jimmy Hillis using open
-								source software. [node.js](//nodejs.org),
-								[express](//expressjs.com/), [less](//lesscss.org),
-								[jade](//jade-lang.com). You can see it all on
-								[GitHub](//github.com/jimmyhillis/jimmy.hillis.me) too.
-
-						nav.projects.bottom-nav
+					- if (user)
+						nav.cms-tools
 							ul
-								//- li.nav-header Projects
 								li
-									a(href="//github.com/jimmyhillis") GitHub
+									a(href='/post') View Posts
 								li
-									a(href="/lab/comicbox.js") Comicboxjs
+									a(href='/post#new') Add Post
 
-						nav.social.bottom-nav
-							ul.nav.nav-list
-								//- li.nav-header Social Media
-								li
-									a(href="//twitter.com/ppjim3") Twitter
-								li
-									a(href="//twitter.com/ppjim3") Last.fm
-								li
-									a(href="//www.goodreads.com/user/show/5464248-jimmy-hillis") Goodreads
+				block copy
+					.copy.clearfix !{body}
 
-						nav.friends.bottom-nav
-							ul.nav.nav-list
-								//- li.nav-header Friends
-								li
-									a(href="//hatchd.com.au") Hatchd Digital
+				block footer
+					footer.page-footer
+						.colophon
+								:markdown
+									This website was created using open source software
+									including [node.js](//nodejs.org),
+									[express](//expressjs.com/), [less](//lesscss.org), and
+									[jade](//jade-lang.com). You can see it all on
+									[GitHub](//github.com/jimmyhillis/jimmy.hillis.me) too.
+
+						//- nav.projects.bottom-nav.clearfix
+						//- 	ul
+						//- 		//- li.nav-header Projects
+						//- 		li
+						//- 			a(href="//github.com/jimmyhillis") GitHub
+						//- 		li
+						//- 			a(href="/lab/comicbox.js") Comicboxjs
+
+						//- nav.social.bottom-nav.clearfix
+						//- 	ul.nav.nav-list
+						//- 		//- li.nav-header Social Media
+						//- 		li
+						//- 			a(href="//twitter.com/ppjim3") Twitter
+						//- 		li
+						//- 			a(href="//twitter.com/ppjim3") Last.fm
+						//- 		li
+						//- 			a(href="//www.goodreads.com/user/show/5464248-jimmy-hillis") Goodreads
+
+						//- nav.friends.bottom-nav.clearfix
+						//- 	ul.nav.nav-list
+						//- 		//- li.nav-header Friends
+						//- 		li
+						//- 			a(href="//hatchd.com.au") Hatchd Digital
 
 			block scripts
 				script(src='//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js')
-				script(src='/javascripts/tweets.js')
-				script(src='/javascripts/ui.js')
-				script(src='/lib/prettify/src/prettify.js')
+				script(src='/javascripts/ui-min.js')
 
 			script
 				var _gaq=[['_setAccount','UA-31741846-1'],['_trackPageview']];
