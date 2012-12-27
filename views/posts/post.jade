@@ -1,6 +1,12 @@
 extends ../base
+include mixins
 
 block copy
-	h1.post-title #{post.title}
-	.date #{post.date}
-	.copy !{post.html}
+	.copy.clearfix
+		mixin singlepost(post)
+		//- nav.post-navigation
+		//- 	ul
+		//- 		li.next
+		//- 			a(href='#') Next post
+		//- 		li.prev
+		//- 			a(href='#') Previous post

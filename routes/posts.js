@@ -24,15 +24,6 @@ module.exports = function (app) {
  * @return {object}     HTTP response render
  */
 controller.list = function(req, res) {
-
-    console.log('okay...');
-    if (req.isAuthenticated()) {
-        console.log('yep!');
-    }
-    else {
-        console.log('nope!');
-    }
-
     Post.find(function (err, posts) {
         // Content negotiation
         if (req.params.format === 'json') {
@@ -54,11 +45,12 @@ controller.list = function(req, res) {
  * @return {object}     HTTP response render
  */
 controller.create = function(req, res) {
+    console.log('YEAH!?');
     // Create and commit new post
     var post = new Post({
         'name': req.param('name'),
         'title': req.param('title'),
-        'date': req.param('date'),
+        'date': new Date(req.param('date')),
         'copy': req.param('copy')
     });
     // Save the post and redirect to listing, if it worked otherwise
@@ -94,8 +86,11 @@ controller.read = function (req, res) {
                 return res.json(post);
             }
             res.page_title = post.title;
-            var markdown = require('markdown').markdown;
-            post.html = markdown.toHTML(post.copy);
+
+
+            // var markdown = require('markdown').markdown;
+            // post.html = markdown.toHTML(post.copy);
+
             res.render('posts/post',
                 {
                     'post': post
@@ -150,7 +145,7 @@ controller.update = function (req, res) {
             // Update post with new settings
             post.name = req.body.name;
             post.title = req.body.title;
-            post.date = req.body.date;
+            post.posted = new Date(req.body.posted);
             post.copy = req.body.copy;
             post.save(function (err) {
                 if (err) {

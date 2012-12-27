@@ -1,9 +1,21 @@
 - var post = post || {}
-form.new-post(action='/post', name='new-post', method='post')
-	input(type='text', name='name', value=post.name)
-	input(type='text', name='title', value=post.title)
-	input(type='date', name='date', value=post.date)
-	textarea(name='copy')= post.copy
-	input(type='hidden', name='_method', value='put')
-	input(type='hidden', name='_id', value=post._id)
-	input(type='submit', name='add', value='Add Post')
+form.cms-post(action='/post', name='new-post', method='post')
+	ol
+			li
+				label: span Name
+				input(type='text', name='name', value=post.name)
+			li
+				label: span Title
+				input(type='text', name='title', value=post.title)
+			li
+				label: span Posted
+				input(type='date', name='posted', value=post.posted)
+			li
+				label: span Copy
+				textarea(name='copy')= post.copy
+	- if (post._id)
+		input(type='hidden', name='_method', value='put')
+		input(type='hidden', name='_id', value=post._id)
+		input(type='submit', name='update', value='Update')
+	- else
+		input(type='submit', name='add', value='Add')

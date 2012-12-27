@@ -3,15 +3,23 @@ extends ../base
 block copy
 	.current
 		h2 Current Posts
-		ul
+		table.cms-list
+			thead
+				tr
+					th Title
+					th Date
+					th Actions
+			tbody
 			each post in posts
-				li
-					a(href='post/#{post.name}') #{post.title} #{post.date}
-					//- a.icon-delete(href='post/#{post.name}?_method=delete'): span [delete]
-					form(method='post', action='/post/#{post.name}')
-						input(type='hidden', name='_method', value='delete')
-						input(type='hidden', name='id', value=post._id)
-						input(type='submit', name='delete', value='delete')
+				tr
+					td: a(href='/post/#{post.name}') #{post.title}
+					td #{dateformat(post.posted)}
+					td
+						a.button(href='/post/#{post.name}/edit') edit
+						form(method='post', action='/post/#{post.name}')
+							input(type='hidden', name='_method', value='delete')
+							input(type='hidden', name='id', value=post._id)
+							input(type='submit', name='delete', value='delete')
 	block edit
 		.new
 			h2 New Post
