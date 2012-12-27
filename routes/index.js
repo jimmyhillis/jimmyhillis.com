@@ -8,13 +8,21 @@ var controller = {};
 
 module.exports = function (app) {
     db = app.set('db');
+    Post = db.model('posts');
     return controller;
 };
 
+
+
 controller.index = function(req, res) {
-    var content;
-    content = _parseMarkdownFile(__dirname + '/../public/content/index.md');
-    res.render('index', { title: 'jimmy.hillis.me', blog: content });
+    Post.find().sort('-posted').find(function (err, posts) {
+        res.page_title = 'Blog';
+        res.render(
+            'index',
+             {
+                'posts': posts
+             });
+    });
 };
 
 controller.lab = function(req, res) {

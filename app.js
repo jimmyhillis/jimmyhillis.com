@@ -78,7 +78,7 @@ mongoose.model(
     new mongoose.Schema({
         'name': String,
         'title': String,
-        'date': String,
+        'posted': { 'type': Date, 'default': Date.now },
         'copy': String
     }));
 
@@ -130,6 +130,23 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+// Template helper methods
+
+app.locals.markdown = function (text) {
+    var md = require("node-markdown").Markdown;
+    return md(text);
+};
+
+app.locals.dateformat = function(date) {
+    var moment = require('moment');
+    return moment(date).format("dddd, MMMM Do YYYY");
+};
+
+app.use(function(req, res, next){
+    res.locals.user = req.user;
+    next();
+});
+
 // Routes
 
 routes = routes(app);
@@ -163,7 +180,8 @@ app.post('/login',
 
 posts = posts(app);
 app.get('/post.:format?', auth.cms, posts.list);
-app.get('/post/:id.:format?', auth.cms, posts.read);
+app.post('/post.:format?', auth.cms, posts.create);
+app.get('/post/:id.:format?', posts.read);
 app.get('/post/:id/edit.:format?', auth.cms, posts.edit);
 app.del('/post/:id.:format?', auth.cms, posts.remove);
 app.put('/post.:format?', auth.cms, posts.update);
@@ -173,6 +191,8 @@ app.put('/post.:format?', auth.cms, posts.update);
 app.use(function(req,res) {
 	res.render('404', { 'title': 'Page Not Found' });
 });
+
+// Run server app
 
 var running = app.listen(3000, function () {
     console.log("Express server listening on port " + app.get('port'));
