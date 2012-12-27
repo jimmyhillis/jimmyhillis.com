@@ -1,4 +1,8 @@
 @import url('http://fonts.googleapis.com/css?family=Source+Code+Pro:300');
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic);
+
+@import 'prettify.css';
 /*================
 Styles for screen and print
 Version 3.0
@@ -6,30 +10,9 @@ Author: Hatchd
 Created: 02.08.2012
 ==================*/
 @font-face {
-  font-family: 'sciflyregular';
-  src: url('../fonts/scifly-sans/scifly-sans-webfont.eot');
-  src: url('../fonts/scifly-sans/scifly-sans-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/scifly-sans/scifly-sans-webfont.woff') format('woff'), url('../fonts/scifly-sans/scifly-sans-webfont.ttf') format('truetype'), url('../fonts/scifly-sans/scifly-sans-webfont.svg#sciflyregular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
   font-family: 'equal-sans';
   src: url('../fonts/equal-sans/equalsans_demo-webfont.eot');
   src: url('../fonts/equal-sans/equalsans_demo-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/equal-sans/equalsans_demo-webfont.woff') format('woff'), url('../fonts/equal-sans/equalsans_demo-webfont.ttf') format('truetype'), url('../fonts/equal-sans/equalsans_demo-webfont.svg#equal_sans_demoregular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'nevis';
-  src: url('../fonts/nevis/nevis-webfont.eot');
-  src: url('../fonts/nevis/nevis-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/nevis/nevis-webfont.woff') format('woff'), url('../fonts/nevis/nevis-webfont.ttf') format('truetype'), url('../fonts/nevis/nevis-webfont.svg#webfontbold') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'juraregular';
-  src: url('../fonts/jura/jura-regular-webfont.eot');
-  src: url('../fonts/jura/jura-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/jura/jura-regular-webfont.woff') format('woff'), url('../fonts/jura/jura-regular-webfont.ttf') format('truetype'), url('../fonts/jura/jura-regular-webfont.svg#juraregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -227,7 +210,7 @@ table {
 body {
   font-size: 15px;
   line-height: 1.5em;
-  font-family: 'juraregular', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   color: #000000;
 }
 p {
@@ -304,11 +287,7 @@ h1 {
   font-size: 4em;
 }
 h2 {
-  font-size: 3em;
-  margin: 1em 0 0 0;
-  border-bottom: solid 1px grey;
-  margin: 0 2em;
-  text-align: center;
+  font-size: 2em;
 }
 hgroup {
   margin: 0 0 1em 0;
@@ -380,6 +359,9 @@ pre {
   padding: 2em;
   background: #333333;
   color: #ffffff;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -394,6 +376,8 @@ code {
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   line-height: 1.3em;
+  max-width: 100%;
+  overflow: hidden;
 }
 code,
 samp,
@@ -433,7 +417,8 @@ a:active {
 }
 /*================
 Form elements
-==================*//*Set global constants*/
+==================*/
+/*Set global constants*/
 form {
   position: relative;
   margin: 0 0 1em 0;
@@ -453,16 +438,35 @@ label {
 button:hover {
   cursor: pointer;
 }
+.button,
+input,
+textarea,
+button {
+  border: 0;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
+a.button,
+button,
+input[type=submit] {
+  background: #24c0eb;
+  border: 0;
+  color: #ffffff;
+  width: auto;
+}
 /*
 	Set styles for full forms
 	(sets of inputs/labels should always be encased in an ordered list for example)
-	*/form ol {
+	*/
+form ol {
   margin: 0;
   list-style: none;
 }
 form li {
   position: relative;
 }
+.button,
 input,
 textarea {
   display: block;
@@ -534,41 +538,51 @@ img {
 }
 body {
   margin: 0;
-  background: #ffffff url(../images/plaid.png);
   border-top: solid 42px #333333;
+  background: #ffffff url(../images/diamond.png);
 }
 #wrapper {
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 5%;
+  padding: 0 1em;
   position: relative;
 }
 nav ul {
-  margin: 1em 0;
+  height: 40px;
   list-style: none;
 }
 nav ul li {
   float: left;
   padding: 0 0.5em;
 }
-.page-title {
-  margin: 20px 0 0 -3%;
+.page-header,
+.primary-nav {
+  margin: 40px auto;
 }
-.page-navigation {
+.page-header {
+  text-align: center;
+}
+.page-header small {
+  font-size: 1.2em;
+}
+.page-title {
+  color: #24c0eb;
+  margin: 0;
+}
+.primary-nav {
+  max-width: 550px;
+  padding: 0;
   background: #24c0eb;
   border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
 }
-.primary-nav {
-  padding: 0;
-  margin: 0;
-}
 .primary-nav ul {
   width: 60%;
-  height: 40px;
   float: left;
   padding: 0 20%;
+  margin: 0;
+  height: 60px;
 }
 .primary-nav ul li {
   display: block;
@@ -581,40 +595,186 @@ nav ul li {
   display: block;
   text-align: center;
   color: #ffffff;
-  line-height: 40px;
+  line-height: 60px;
   vertical-align: middle;
+  font-size: 1.25em;
 }
 .primary-nav ul a:hover {
   color: #333333;
 }
+.cms-tools,
 .social-media {
   position: absolute;
-  top: -62px;
-  right: 0;
+  top: -82px;
 }
+.cms-tools ul,
 .social-media ul {
   margin: 0;
   padding: 0;
 }
+.cms-tools li,
 .social-media li {
   float: left;
   padding: 0 20px;
 }
+.cms-tools a,
 .social-media a {
   line-height: 40px;
   font-size: 0.8em;
   color: #ffffff;
 }
+.cms-tools a:hover,
 .social-media a:hover {
   color: #24c0eb;
+}
+.cms-tools {
+  left: 0;
+}
+.social-media {
+  right: 0;
 }
 .copy {
   margin-top: 2em;
 }
+.page-footer {
+  margin: 4em 0 2em 0;
+}
 .colophon {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: solid 1px #333333;
+  background: #24c0eb;
+  color: #ffffff;
+  padding: 1em;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  text-align: center;
+  line-height: 20px;
+  vertical-align: middle;
+}
+.colophon p {
+  margin: 0;
+}
+.colophon a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+.p-title {
+  font-size: 3em;
+  border-bottom: solid 1px grey;
+  margin: 1em 2em;
+  padding: 0 0 0.5em 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+.p-date {
+  text-align: center;
+  line-height: 1em;
+  margin-bottom: 2em;
+}
+.p-body {
+  padding: 0 2em;
+}
+.p-body p:first-child {
+  text-transform: uppercase;
+  font-size: 1.3em;
+  line-height: 1.4em;
+  text-align: center;
+  margin-left: -2em;
+  margin-right: -2em;
+}
+.p-comments {
+  border-top: solid 1px grey;
+  margin: 4em -2em 0 -2em;
+  padding: 2em 0 0 0;
+}
+.column {
+  width: 40%;
+  margin: 0 5%;
+  float: left;
+}
+.profile-images img {
+  width: 45%;
+  margin: 2.5%;
+  float: left;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
+.cms-post textarea {
+  height: 40em;
+}
+.cms-list {
+  width: 100%;
+}
+.cms-list th {
+  text-align: left;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+.cms-list tr {
+  border-bottom: dotted 1px #333333;
+}
+.cms-list td {
+  padding: 1em 0;
+}
+.cms-list td form,
+.cms-list td input {
+  margin: 0;
+}
+.cms-list .button,
+.cms-list input[type=submit],
+.cms-list button {
+  float: left;
+  margin-right: 1em;
+}
+@media screen and (max-width: 1200px) {
+  
+}
+@media screen and (max-width: 800px) {
+  .column {
+    width: 47%;
+    margin-left: 2%;
+    margin-right: 0;
+  }
+  .column:nth-of-type(odd) {
+    margin-right: 2%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .p-title,
+  .p-body p:first-child,
+  .p-comments {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .page-header {
+    background: #ffffff;
+    padding: 1em;
+    margin: 0 -1em;
+  }
+  .primary-nav {
+    margin: 0 -1em;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+  }
+  .primary-nav ul {
+    margin: 0 auto;
+    width: 100%;
+    padding: 0;
+  }
+  .primary-nav a.current,
+  .primary-nav a:hover {
+    background: #ffffff;
+    color: #333333;
+  }
+  .page-footer {
+    margin: 0 -1em;
+  }
+  .column {
+    width: 100%;
+    float: none;
+    margin: 0;
+  }
 }
 @media print {
   

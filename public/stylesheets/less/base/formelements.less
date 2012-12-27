@@ -1,6 +1,6 @@
 /*================
 Form elements
-==================*/ 
+==================*/
 
 	/*Set global constants*/
 		form{
@@ -15,16 +15,32 @@ Form elements
 			}
 			label{display:block;margin:0 0 0.25em 0;}
 			button:hover{cursor:pointer;}
+            .button,
+            input,
+            textarea,
+            button{
+                border:0;
+                .border-radius(2px);
+            }
+            a.button,
+            button,
+            input[type=submit]{
+                background:@col-babyblue;
+                border:0;
+                color:@white;
+                width:auto;
+            }
+
 	/*
 	Set styles for full forms
 	(sets of inputs/labels should always be encased in an ordered list for example)
-	*/  
+	*/
 			form ol{
 				margin:0;
 				list-style:none;
 			}
 			form li{position:relative;}
-			input,textarea{
+			.button,input,textarea{
 				display:block;
 				width:auto;
 				margin:0 0 1em 0;
@@ -36,5 +52,3 @@ Form elements
 				color:@col-base;
 
 			}
-			
-			

@@ -51,11 +51,17 @@ Created: 02.08.2012
 //===
 //...
 
+@import 'prettify.css';
+
 //===
 	//set master layout
 	//(the scaffolding of the site, defined through elements that occur only once per page, defined via an aria role or ID)
 //===
 @import 'layout/layout-master.less';
+@import 'layout/layout-articles.less';
+@import 'layout/layout-pages.less';
+@import 'layout/layout-music.less';
+@import 'layout/layout-cms.less';
 
 //===
 	//set unique template layout(s)
@@ -87,6 +93,34 @@ Created: 02.08.2012
 
 //property-specific
 	//@import 'vendor_specific/vendorsp-byproperty.less';
+
+
+//===
+    //set responsive rules (also for screen)
+    //(make changes to layout, modular components or base rules, based on screen dimension or pixel density.
+    //Note:As they use complex media queries, these declarations will not register in ie8 and below)
+//===
+
+//===
+    //Breakpoint 1
+//===
+@media screen and(max-width:1200px){
+    @import 'responsive/breakpt-1.less';
+}
+
+//===
+    //Breakpoint 2
+//===
+@media screen and(max-width:800px){
+    @import 'responsive/breakpt-2.less';
+}
+
+//===
+    //Breakpoint 3
+//===
+@media screen and(max-width:600px){
+    @import 'responsive/breakpt-3.less';
+}
 
 //set print appearance
 //(when any page from the site is printed, set rules to ensure only the useful bits are included, and that units  of measurement are transposed from pixels to physical ones - like mm, and points)
