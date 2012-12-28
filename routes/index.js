@@ -16,35 +16,31 @@ module.exports = function (app) {
 
 controller.index = function(req, res) {
     Post.find().sort('-posted').find(function (err, posts) {
-        res.page_title = 'Blog';
         res.render(
             'index',
              {
+                'page_title': 'Code, music & books',
                 'posts': posts
              });
     });
 };
 
 controller.lab = function(req, res) {
-    var content;
-    content = _parseMarkdownFile(__dirname + '/../public/content/lab.md');
-    res.render('lab', { title: 'Lab', content: content });
+    res.render('lab', {
+        page_title: 'Lab'
+    });
 };
 
 controller.music = function(req, res) {
-    var content;
-    content = _parseMarkdownFile(__dirname + '/../public/content/music.md');
-    res.render('music', { title: 'Music', content: content });
-};
-
-controller.folio = function(req, res) {
-    res.render('folio', { title: 'Web folio' });
+    res.render('music', {
+        page_title: 'Music'
+    });
 };
 
 controller.contact = function(req, res) {
-    var content;
-    content = _parseMarkdownFile(__dirname + '/../public/content/contact.md');
-    res.render('contact', { title: 'Contact', content: content });
+    res.render('contact', {
+        page_title: 'Contact'
+    });
 };
 
 controller.error = function(req, res) {
