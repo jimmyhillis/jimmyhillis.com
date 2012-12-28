@@ -683,8 +683,9 @@ nav ul li {
 }
 .p-comments {
   border-top: solid 1px grey;
-  margin: 4em -2em 0 -2em;
-  padding: 2em 0 0 0;
+  font-size: 3em;
+  margin: 1em 2em 0 2em;
+  padding: 1em;
 }
 .column {
   width: 40%;
@@ -752,6 +753,7 @@ nav ul li {
     margin: 0 -1em;
   }
   .primary-nav {
+    max-width: none;
     margin: 0 -1em;
     border-radius: 0;
     -moz-border-radius: 0;
@@ -774,6 +776,12 @@ nav ul li {
     width: 100%;
     float: none;
     margin: 0;
+  }
+  .p-comments {
+    font-size: 1em;
+    padding: 2em;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 @media print {
