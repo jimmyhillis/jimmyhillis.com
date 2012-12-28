@@ -1,11 +1,14 @@
 {
     "name": "jimmy-hillis-me",
-    "version": "0.0.1",
+    "version": "1.1",
     "private": true,
     "dependencies": {
         "express": "3.0.5",
         "jade": ">= 0.0.1",
         "mongoose": ">= 2.7",
-        "markdown": ">= 0.4"
+        "node-markdown": ">= 0.1",
+        "passport": ">= 0",
+        "passport-local": ">= 0",
+        "moment": "1.7.2"
     }
 }
