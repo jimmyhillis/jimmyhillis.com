@@ -35,14 +35,6 @@ app.configure(function() {
 
     var static = path.join(__dirname, 'public');
     app.use(express.static(static));
-    // app.get(/\/js/, express.static(path.join(static,'js')));
-    // app.get(/\/css/, express.static(path.join(static,'css')));
-    // app.get(/\/images/, express.static(path.join(static,'images')));
-
-    // Enable JSONP for my feeds
-    // app.set('jsonp callback', true);
-    // app.set('cache', __dirname + '/cache');
-    // app.set('external_cache_time', 600000);
 });
 
 app.configure('development', function() {
