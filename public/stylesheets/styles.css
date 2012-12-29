@@ -482,6 +482,9 @@ textarea {
   -webkit-box-sizing: border-box;
   color: #000000;
 }
+.button {
+  margin-bottom: 0;
+}
 /*================
 Images
 ==================*/
@@ -744,7 +747,7 @@ nav ul li {
   border-bottom: dotted 1px #333333;
 }
 .cms-list td {
-  padding: 1em 0;
+  padding: 0.5em 0;
 }
 .cms-list td form,
 .cms-list td input {
@@ -756,7 +759,10 @@ nav ul li {
   float: left;
   margin-right: 1em;
 }
-@media screen and (max-width: 1200px) {
+.cms-list .actions {
+  min-width: 120px;
+}
+@media screen and (min-width: 800px) {
   
 }
 @media screen and (max-width: 800px) {
