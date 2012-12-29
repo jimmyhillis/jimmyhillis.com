@@ -14,7 +14,7 @@ module.exports = function (app) {
 
 controller.index = function(req, res) {
 
-    var limit = 1
+    var limit = 5
       , pagination = {
             'prev': false,
             'next': false

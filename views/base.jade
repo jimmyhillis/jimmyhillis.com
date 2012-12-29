@@ -20,38 +20,37 @@ html.no-js(lang='en')
 		body(class=body_class)
 			#wrapper
 				block header
-					header.page-header
-						h1.page-title
-							a(href='/') jimmy-hillis
-						small.page-subtitle Code, books, and music, though not always in that order.
-
-					nav.primary-nav.clearfix
-						ul.page-navigation
-							li
-								a.nav-link(href='/') blog
-							li
-								a.nav-link(href='/music') music
-							li
-								a.nav-link(href='/lab') lab
-							li
-								a.nav-link(href='/contact') moi
-
-					nav.social-media
-						ul
-							li
-								a(href='//twitter.com/ppjim3', data-widget='feed-twitter').twitter Twitter
-							li
-								a(href='//instagr.am/jimmyhillis', data-widget='feed-instagram').instagram Instagram
-							li
-								a(href='//last.fm/user/ppjim3', data-widget='feed-lastfm').last-fm Last.fm
-
+					block page_title
+						header.page-header
+							h1.page-title
+								a(href='/') jimmy-hillis
+							small.page-subtitle Code, books, and music, though not always in that order.
+					block navigation
+						nav.primary-nav.clearfix
+							ul.page-navigation
+								li
+									a.nav-link(href='/') blog
+								li
+									a.nav-link(href='/music') music
+								li
+									a.nav-link(href='/lab') lab
+								li
+									a.nav-link(href='/contact') moi
+						nav.social-media
+							ul
+								li
+									a(href='//twitter.com/ppjim3', data-widget='feed-twitter').twitter Twitter
+								li
+									a(href='//instagr.am/jimmyhillis', data-widget='feed-instagram').instagram Instagram
+								li
+									a(href='//last.fm/user/ppjim3', data-widget='feed-lastfm').last-fm Last.fm
 					- if (user)
 						nav.cms-tools
 							ul
 								li
 									a(href='/post') View Posts
 								li
-									a(href='/post#new') Add Post
+									a(href='/post/new/') Add Post
 
 				block copy
 					.copy.clearfix !{body}

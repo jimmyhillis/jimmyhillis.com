@@ -1,6 +1,5 @@
 /**
- * [controller description]
- * @type {Object}
+ * RESTful controller views for blog Post objects.
  * @author Jimmy Hillis <jimmy@hillis.me>
  */
 
@@ -24,18 +23,31 @@ module.exports = function (app) {
  * @return {object}     HTTP response render
  */
 controller.list = function(req, res) {
-    Post.find(function (err, posts) {
+    Post.find().sort('-posted').find(function (err, posts) {
         // Content negotiation
         if (req.params.format === 'json') {
             res.json(posts);
         }
-        res.page_title = 'Posts';
         res.render(
             'posts/list',
              {
+                'page_title': 'Posts',
                 'posts': posts
              });
     });
+};
+
+/**
+ * Edit view builds form page for editing specific post resource
+ * @param  {object} req HTTP request object
+ * @param  {object} res HTTP response object to return to requester
+ * @return {object}     HTTP response render
+ */
+controller.add = function (req, res) {
+    res.render('posts/new',
+        {
+            'page_title': 'New Post'
+        });
 };
 
 /**
@@ -45,7 +57,6 @@ controller.list = function(req, res) {
  * @return {object}     HTTP response render
  */
 controller.create = function(req, res) {
-    console.log('YEAH!?');
     // Create and commit new post
     var post = new Post({
         'name': req.param('name'),
@@ -78,21 +89,16 @@ controller.read = function (req, res) {
     // Convert to valid Mongo ID
     Post.findOne({ 'name': id },
         function (err, post) {
-            if (err) {
+            if (err || !post) {
                 res.send(404);
             }
             // Content negotiation
             if (req.params.format === 'json') {
                 return res.json(post);
             }
-            res.page_title = post.title;
-
-
-            // var markdown = require('markdown').markdown;
-            // post.html = markdown.toHTML(post.copy);
-
             res.render('posts/post',
                 {
+                    'page_title': post.title,
                     'post': post
                 });
         });
@@ -112,12 +118,12 @@ controller.edit = function (req, res) {
     // Load request to fill form
     Post.findOne({ 'name': id },
         function (err, post) {
-            if (err) {
+            if (err || !post) {
                 res.send(404);
             }
-            res.page_title = post.title;
             res.render('posts/edit',
                 {
+                    'page_title': 'Editing ' + post.title,
                     'post': post
                 });
         });
@@ -139,7 +145,7 @@ controller.update = function (req, res) {
     // Load request to fill form
     Post.findById(id,
         function (err, post) {
-            if (err) {
+            if (err || !post) {
                 res.send(404);
             }
             // Update post with new settings
@@ -164,7 +170,6 @@ controller.update = function (req, res) {
  */
 controller.remove = function (req, res) {
     var id = req.body._id;
-    console.log('DELETE ME!');
     if (!id) {
         res.send(404);
     }
@@ -173,7 +178,7 @@ controller.remove = function (req, res) {
     // Load request to fill form
     Post.findById(id,
         function (err, post) {
-            if (err) {
+            if (err || !post) {
                 res.send(404);
             }
             // Delete post

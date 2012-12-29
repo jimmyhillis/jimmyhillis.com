@@ -15,8 +15,6 @@ var express = require('express')
 
 var app = module.exports = express();
 
-console.log(process.env);
-
 // Server configation
 
 app.configure(function() {
@@ -131,9 +129,10 @@ app.locals.markdown = function (text) {
     return md(text);
 };
 
-app.locals.dateformat = function(date) {
+app.locals.dateformat = function(date, format) {
     var moment = require('moment');
-    return moment(date).format("dddd, MMMM Do YYYY");
+    format = format || "dddd, MMMM Do YYYY";
+    return moment(date).format(format);
 };
 
 app.use(function(req, res, next){
@@ -153,7 +152,9 @@ app.get('/contact', routes.contact);
 
 var auth = {
     'login': function (req, res) {
-        res.render('login');
+        res.render('login', {
+            'page_title': 'Login'
+        });
     },
     'cms': function (req, res, next) {
         if (!req.isAuthenticated()) {
@@ -166,7 +167,7 @@ var auth = {
 app.get('/login', auth.login);
 app.post('/login',
     passport.authenticate('local', {
-        successRedirect: '/',
+        successRedirect: '/post/',
         failureRedirect: '/login'
     }));
 
@@ -175,6 +176,7 @@ app.post('/login',
 posts = posts(app);
 app.get('/post.:format?', auth.cms, posts.list);
 app.post('/post.:format?', auth.cms, posts.create);
+app.get('/post/new', auth.cms, posts.add);
 app.get('/post/:id.:format?', posts.read);
 app.get('/post/:id/edit.:format?', auth.cms, posts.edit);
 app.del('/post/:id.:format?', auth.cms, posts.remove);
