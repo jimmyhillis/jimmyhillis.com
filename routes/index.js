@@ -1,7 +1,6 @@
-/*
- * Index controllers are used to build basic
- * content pages (with unique page designs) from
- * my database.
+/**
+ * Standard content controller views, each with unique design/templates
+ * @author Jimmy Hillis <jimmy@hillis.me>
  */
 
 var controller = {};
