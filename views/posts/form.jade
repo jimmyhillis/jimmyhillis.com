@@ -9,7 +9,7 @@ form.cms-post(action='/post', name='new-post', method='post')
 				input(type='text', name='title', value=post.title)
 			li
 				label: span Posted
-				input(type='date', name='posted', value=dateformat(post.posted, 'YYYY-M-D'))
+				input(type='date', name='posted', value=dateformat(post.posted, 'YYYY-MM-DD'))
 			li
 				label: span Copy
 				textarea(name='copy')= post.copy
