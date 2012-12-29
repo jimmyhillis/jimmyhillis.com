@@ -12,16 +12,35 @@ module.exports = function (app) {
     return controller;
 };
 
-
-
 controller.index = function(req, res) {
-    Post.find().sort('-posted').find(function (err, posts) {
-        res.render(
-            'index',
-             {
-                'page_title': 'Code, music & books',
-                'posts': posts
-             });
+
+    var limit = 1
+      , pagination = {
+            'prev': false,
+            'next': false
+      }
+      , page = (req.query.page) ? parseInt(req.query.page, 10) : 1;
+
+    // Find out total number of records
+    Post.count(function (err, count) {
+        // Determine next/previous pagination pages
+        if (count > (limit * page)) {
+            pagination.next = page + 1;
+        }
+        if (page > 1) {
+            pagination.prev = page - 1;
+        }
+        // Load correct records from current skip value
+        Post.find().sort('-posted').skip((page - 1) * limit).limit(limit).find(function (err, posts) {
+            res.render(
+                'index',
+                 {
+                    'page_title': 'Code, music & books',
+                    'posts': posts,
+                    'pagination': pagination
+                 });
+        });
+
     });
 };
 
@@ -46,25 +65,3 @@ controller.contact = function(req, res) {
 controller.error = function(req, res) {
     res.send("404. Page not found");
 };
-
-// Private methods
-
-function _parseMarkdown(copy) {
-    var markdown = require('markdown').markdown;
-    return markdown.toHTML(copy);
-}
-
-function _parseMarkdownFile(markdown_file) {
-    var fs = require('fs')
-      , markdown = require('markdown').markdown
-      , copy = '';
-
-    try {
-        copy = fs.readFileSync(markdown_file, 'ascii');
-    }
-    catch (err) {
-        console.log("Error loading the Blog file");
-    }
-
-    return markdown.toHTML(copy);
-} // !_parseMarkdownFile
