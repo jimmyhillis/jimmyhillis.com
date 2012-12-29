@@ -15,6 +15,8 @@ var express = require('express')
 
 var app = module.exports = express();
 
+console.log(process.env);
+
 // Server configation
 
 app.configure(function() {
@@ -186,6 +188,6 @@ app.use(function(req,res) {
 
 // Run server app
 
-var running = app.listen(3000, function () {
+var running = app.listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
 });
