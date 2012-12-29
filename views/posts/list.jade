@@ -1,4 +1,4 @@
-extends ../base
+extends base
 
 block copy
 	.current
@@ -8,19 +8,15 @@ block copy
 				tr
 					th Title
 					th Date
-					th Actions
+					th.action Actions
 			tbody
 			each post in posts
 				tr
 					td: a(href='/post/#{post.name}') #{post.title}
 					td #{dateformat(post.posted)}
-					td
+					td.action
 						a.button(href='/post/#{post.name}/edit') edit
 						form(method='post', action='/post/#{post.name}')
 							input(type='hidden', name='_method', value='delete')
-							input(type='hidden', name='id', value=post._id)
+							input(type='hidden', name='_id', value=post._id)
 							input(type='submit', name='delete', value='delete')
-	block edit
-		.new
-			h2 New Post
-			include form
