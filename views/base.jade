@@ -51,6 +51,9 @@ html.no-js(lang='en')
 									a(href='/post') View Posts
 								li
 									a(href='/post/new/') Add Post
+								- if (typeof post != "undefined" && post.name)
+									li
+										a(href='/post/#{post.name}/edit/') Edit Post
 
 				block copy
 					.copy.clearfix !{body}
