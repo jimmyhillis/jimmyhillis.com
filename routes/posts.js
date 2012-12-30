@@ -127,7 +127,7 @@ controller.edit = function (req, res) {
             }
             res.render('posts/edit',
                 {
-                    'page_title': 'Editing ' + post.title,
+                    'page_title': 'Editing Post ',
                     'post': post
                 });
         });
