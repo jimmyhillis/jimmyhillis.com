@@ -544,6 +544,7 @@ body {
   margin: 0;
   border-top: solid 42px #333333;
   background: #ffffff url(../images/diamond.png);
+  -webkit-text-size-adjust: 100%;
 }
 #wrapper {
   max-width: 960px;
@@ -699,8 +700,8 @@ nav ul li {
   font-size: 1.3em;
   line-height: 1.4em;
   text-align: center;
-  margin-left: -2em;
-  margin-right: -2em;
+  margin-left: -1.5em;
+  margin-right: -1.5em;
 }
 .p-comments {
   border-top: solid 1px grey;
@@ -718,6 +719,24 @@ nav ul li {
 .p-showcomments em {
   text-decoration: underline;
   font-style: normal;
+}
+.p-share {
+  padding: 0 2em;
+  margin-left: 50%;
+}
+.p-share .s-copy {
+  float: left;
+  margin-right: 0.5em;
+}
+.p-share ul {
+  list-style: none;
+  margin-left: 0;
+}
+.p-share li {
+  float: left;
+  padding: 0;
+  margin-right: 0.5em;
+  text-transform: uppercase;
 }
 .column {
   width: 40%;

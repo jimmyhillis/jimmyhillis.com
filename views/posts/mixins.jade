@@ -7,6 +7,11 @@ mixin singlepost (post, show_comments)
 			span.date #{dateformat(post.posted)}
 		.p-body!= markdown(post.copy)
 		- if (show_comments)
+			nav.p-share#share.clearfix
+				p.s-copy Share this article with
+				ul
+					li.s-link: a(href=social_media.twitter) Twitter
+					li.s-link: a(href=social_media.facebook) Facebook
 			.p-comments#p-comments
 				h2 Commentary
 				#disqus_thread
