@@ -722,11 +722,11 @@ nav ul li {
 }
 .p-share {
   padding: 0 2em;
-  margin-left: 50%;
 }
 .p-share .s-copy {
   float: left;
   margin-right: 0.5em;
+  color: #24c0eb;
 }
 .p-share ul {
   list-style: none;
@@ -737,6 +737,7 @@ nav ul li {
   padding: 0;
   margin-right: 0.5em;
   text-transform: uppercase;
+  text-decoration: underline;
 }
 .column {
   width: 40%;
@@ -839,6 +840,9 @@ nav ul li {
   }
   .p-date .date {
     display: block;
+  }
+  .p-share {
+    padding: 0 0.5em;
   }
   .p-comments {
     font-size: 1em;
