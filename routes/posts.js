@@ -202,19 +202,20 @@ controller.remove = function (req, res) {
  * @return {object}           Object of social media share links
  */
 function _social_media(post, req) {
-    var headline = post.copy.split("\n")[0].replace('\r', '');
+    var current_url = 'http://' + req.header('host') + req.url
+      , headline = post.copy.split("\n")[0].replace('\r', '');
     // Share links for social media based on this post
     var tweet_vars = {
           'text': '"' + post.title + '" ' + headline,
-          'url': req.current_url,
+          'url': current_url,
           'via': 'ppjim3'
         }
       , facebook_vars = {
           'app_id': '184017585073361',
-          'link': req.current_url,
+          'link': current_url,
           'name': post.title,
           'description': headline,
-          'redirect_uri': req.current_url
+          'redirect_uri': current_url
         }
       , tweet_link = 'http://twitter.com/intent/tweet'
                    + '?text=' + encodeURIComponent(tweet_vars.text)
