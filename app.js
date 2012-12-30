@@ -137,6 +137,7 @@ app.locals.dateformat = function(date, format) {
 
 app.use(function(req, res, next){
     res.locals.user = req.user;
+    res.locals.current_url = 'http://' + req.header('host') + req.url;
     next();
 });
 
