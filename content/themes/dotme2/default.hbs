@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {{! Page Meta }}
+    <title>{{meta_title}}</title>
+    <meta name="description" content="{{meta_description}}" />
+
+    {{! Styles'n'Scripts }}
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/styles.css" />
+
+    <link rel="shortcut icon", href="/assets/images/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed", href="/assets/images/apple-touch-icon-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed", sizes="72x72", href="/assets/images/apple-touch-icon-72x72-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed", sizes="114x114", href="/assets/images/apple-touch-icon-114x114-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed", sizes="144x144", href="/assets/images/apple-touch-icon-144x144-precomposed.png" />
+
+    {{! Ghost outputs important style and meta data with this tag }}
+    {{ghost_head}}
+
+</head>
+<body class="{{body_class}}">
+
+    <div id="wrapper">
+
+        <header class="page-header">
+            <h1 class="page-title"><a href="/">jimmy-hillis</a></h1>
+            <small class="page-subtitle">Code, music and books... rarely in that order.</small>
+        </header>
+        <nav class="primary-nav clearfix">
+            <ul class="page-navigation">
+                <li><a href="/" class="nav-link">blog</a></li>
+                <li><a href="/music/" class="nav-link">music</a></li>
+                <li><a href="/lab/" class="nav-link">lab</a></li>
+                <li><a href="/contact/" class="nav-link">moi</a></li>
+            </ul>
+        </nav>
+        <nav class="social-media">
+            <ul>
+                <li><a href="//twitter.com/ppjim3" data-widget="feed-twitter" class="twitter">Twitter</a></li>
+                <li><a href="//instagr.am/jimmyhillis" data-widget="feed-instagram" class="instagram">Instagram</a></li>
+                <li><a href="//last.fm/user/ppjim3" data-widget="feed-lastfm" class="last-fm">Last.fm</a></li>
+            </ul>
+        </nav>
+
+        {{! Everything else gets inserted here }}
+        {{{body}}}
+
+        <footer class="page-footer">
+            <div class="colophon">
+                <p>This website was created using open source software including <a href="//nodejs.org">node.js</a>
+                    <a href="//ghost.org/">ghost</a>. You can see it all on
+                    <a href="//github.com/jimmyhillis/jimmy.hillis.me">GitHub</a> too.
+                </p>
+            </div>
+        </footer>
+
+        {{! Ghost outputs important scripts and data with this tag }}
+        {{ghost_foot}}
+
+    </div>
+
+    {{! The main JavaScript file for Casper }}
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/ui-min.js"></script>
+
+</body>
+</html>

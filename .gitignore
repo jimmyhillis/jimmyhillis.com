@@ -1,5 +1,12 @@
 .DS_Store
-jimmy.hillis.me.sublime-project
-jimmy.hillis.me.sublime-workspace
-cache
-node_modules
+*.sublime-*
+node_modules/
+
+# ghost core
+core/
+
+content/
+!content/themes/dotme2/
+!content/themes/plugins/
+Gruntfile.js
+index.js
