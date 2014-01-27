@@ -1,0 +1,103 @@
+/**
+ * Page header
+ */
+
+/**
+ * Init
+ *
+ * Define variables, helper mixins and animations
+ * local to this component
+ */
+    // $sample-var: foo;
+    // @mixin sample-mixin($args:default){}
+    // @keyframes sample{}
+
+/**
+ * Component classes
+ */
+
+#site-header{
+    box-sizing:border-box;
+    position:absolute;
+    top:0;
+    left:0;
+    height:40px;
+    width:100%;
+    background:$blue url(/assets/images/geo-break2.jpg) bottom center;
+    &,
+    a{
+        color:$white;
+        text-decoration:none;
+        line-height:40px;
+    }
+}
+
+    #site-title{
+        margin:0 15px;
+        float:left;
+        font-size:1.3em;
+    }
+
+    .internal-content{
+        .nav-link{
+            float:left;
+            margin-right:1em;
+            &:hover{
+                text-decoration:underline;
+            }
+        }
+    }
+
+    // External link gallery
+    .external-content{
+        position:absolute;
+        top:0;
+        right:20px;
+        padding-left:80px;
+        a{
+            margin-right:0.5em;
+            line-height:40px;
+            i{
+                font-size:1.6em;
+                line-height:40px;
+            }
+            span{
+                display:none;
+                position:absolute;
+                left:0;
+                top:0;
+            }
+            &:hover{
+                i{
+                    font-size:1.8em;
+                    line-height:40px;
+                }
+                span{
+                    display:block;
+                }
+            }
+        }
+        ul{
+            list-style:none;
+        }
+            li{
+                float:left;
+            }
+    }
+
+/**
+ * Modernizr hooks
+ */
+    // .no-flexbox{}
+
+/**
+ * Media queries
+ */
+    // @media @tablet{}
+    // Set in settings.less
+
+/**
+ * IE overrides
+ */
+    //.lt-ie9{}
+    //.lt-ie8{}

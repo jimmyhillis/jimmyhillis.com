@@ -1,0 +1,21 @@
+/**
+ * Base link and text selection styles
+ */
+
+/**
+ * Link styles
+ */
+    a{
+        color:$link;
+        text-decoration:underline;
+        &:hover{
+            color:$link-active;
+            text-decoration:none;
+        }
+        &[href^="tel"]{
+            color:inherit;
+        }
+    }
+    :focus{
+        outline:none;
+    }

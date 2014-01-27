@@ -1,0 +1,99 @@
+/**
+ * Global settings
+ *
+ * Use this file to set custom colours, and to set
+ * the base text size / line height value
+ * More settings can be added here, the sky is the limit!
+ */
+
+/**
+ * Grid
+ *
+ * $raw width:     target container width (px);
+ * $total-columns: number of grid columns;
+ * $gutter:        column gutter (px);
+ */
+    $raw-width:1000;
+    $total-columns:12;
+    $raw-gutter:20;
+
+/**
+ * Responsive breakpoints
+ */
+    @mixin breakpoint($point){
+        @if $point == standard{
+            @media (max-width:2000px){ @content; }
+        }
+        @else if $point == tablet{
+            @media (max-width:1024px){ @content; }
+        }
+        @else if $point == mobile{
+            @media (max-width:600px){ @content; }
+        }
+        @else if $point == retina{
+            @media (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi){ @content; }
+        }
+    }
+
+/**
+ * Typography
+ */
+
+    /**
+     * Define the size of an em (base font size)
+     */
+        $fontsize:16;
+
+    /**
+     * Set Text sizes
+     */
+        $small:0.75em;
+        $large:2em;
+
+    /**
+     * Project font famillies
+     */
+
+        /**
+         * Base
+         */
+            $sans:'Source Sans Pro',sans-serif;
+            $serif:serif;
+            $monospace:'Source Code Pro',monospace;
+
+        /**
+         * Brand
+         */
+            @mixin font($face:default){
+                @if $face == default{
+                    font:{
+                        family:$sans;
+                    }
+                }
+            }
+
+/**
+ * Colour swatches
+ */
+
+    /**
+     * Project colours
+     */
+        $white:#fff;
+        $black:#333;
+        $yellow:#fffb88;
+        $red:#aa3025;
+        $blue:#60bddb;
+        $grey:#737373;
+        $lightgrey:#e0e0e0;
+
+    /**
+     * Basic colours
+     * Note: Altering left-hand variable name will affect other LESS files
+     */
+    	$default:$black;
+    	$muted:lighten($black,50%);
+    	$highlight:$yellow;
+    	$link:$blue;
+    	$link-active:lighten($blue,10%);
+

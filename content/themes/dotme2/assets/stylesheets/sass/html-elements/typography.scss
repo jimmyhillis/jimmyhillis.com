@@ -1,0 +1,207 @@
+/**
+ * Base type styles
+ */
+
+/**
+ * Set base font size/line-height and declare the px size of an em unit
+ */
+	body{
+        color:$default;
+        font-size:(100/16)*$fontsize#{'%'};
+        line-height:1.5em;
+        @include font(default);
+        font-weight:300;
+	}
+    p,li,dt,dd,input,textarea,button{
+        line-height:1.5em;
+    }
+
+/**
+ * Headings
+ */
+    h1,h2,h3,h4,h5,h6{
+        margin:1em 0 .5em;
+        line-height:1.2em;
+        font-family:'Source Sans Pro';
+        font-weight:200;
+    }
+        h1{
+            font-size:3em;
+        }
+        h2{
+            font-size:2em;
+        }
+        h3{
+            font-size:1.5em;
+        }
+        h4,
+        h5,
+        h6{
+            font-size:1em;
+        }
+
+/**
+ * Block elements
+ */
+	p{
+		margin:0 0 1em 0;
+	}
+	hr{
+		height:0;
+		margin:0 0 1em 0;
+		padding:0;
+		border:none;
+		border-top:1px solid $muted;
+	}
+
+/**
+ * Quotes
+ */
+
+    /**
+     * Blockquotes
+     */
+        blockquote{
+            margin:0 0 1em 3em;
+            > p{
+                font-size:1.4em;
+                margin-bottom:0.60em;
+                &:first-child:before{
+                    content:'\201C';
+                }
+                &:first-child:after{
+                    content:'\201D';
+                }
+            }
+            footer p{
+                margin:-0.5em 0 0 0;
+                font-size:0.85em;
+                font-style:italic;
+                &:before{
+                    content:"- ";
+                }
+            }
+        }
+
+    /**
+     * Inline quotes
+     */
+        q{
+            font-style:italic;
+            color:inherit;
+        }
+        cite{
+            font-style:italic;
+        }
+
+
+/**
+ * Lists
+ */
+
+    /**
+     * Globals
+     */
+        ul,ol,dl{
+            margin:0 0 1em 2em;
+            padding:0;
+        }
+            li{
+                margin:0 0 0.25em 0;
+            }
+
+    /**
+     * Unordered lists
+     */
+        ul{
+            list-style:disc outside;
+            ul{
+                margin:0.25em 0 0.5em 1em;
+            }
+        }
+
+    /**
+     * Ordered lists
+     */
+        ol{
+            list-style:decimal outside;
+            ol{
+                margin:0.25em 0 0.5em 1.5em;
+                list-style-type:lower-roman;
+            }
+        }
+
+    /**
+     * Definiton lists
+     */
+        dl{
+            margin-left:0;
+        }
+            dt{
+                font-weight:bold;
+                margin:0 0 0.5em 0;
+            }
+            dd{
+                margin:0 0 0.5em 0;
+            }
+
+
+/**
+ * Inline elements
+ */
+
+    /**
+     * Superscript/subscript
+     */
+    	sup,
+        sub{
+    	    font-size: 75%;
+    	    line-height: 0;
+    	    position: relative;
+    	    vertical-align: baseline;
+    	}
+    	sup {
+    	    top: -0.5em;
+    	}
+    	sub {
+    	    bottom: -0.25em;
+    	}
+
+    /**
+     * For marking up content relevency/edits and highlighting content
+     */
+    	ins{
+    		background-color:$highlight;
+    	}
+    	del{
+    		text-decoration:line-through;
+    	}
+    	s{
+    		color:$muted;
+    		text-decoration:line-through;
+    	}
+    	mark{
+    		background-color:$highlight;
+    		color:inherit;
+    		font-weight:normal;
+    	}
+    /**
+     * Small print
+     */
+    	small{
+    		font-weight:normal;
+    		font-style:normal;
+    	}
+    /**
+     * Phrase tags
+     */
+    	strong,b{
+    		font-weight:400;
+    	}
+    	em,i{
+    		font-style:italic;
+    	}
+    	dfn,abbr{
+    		font-style:inherit;
+    		position:relative;
+    	}
