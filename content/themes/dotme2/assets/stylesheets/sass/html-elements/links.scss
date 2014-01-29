@@ -7,10 +7,10 @@
  */
     a{
         color:$link;
-        text-decoration:underline;
+        text-decoration:none;
         &:hover{
+            text-decoration:underline;
             color:$link-active;
-            text-decoration:none;
         }
         &[href^="tel"]{
             color:inherit;

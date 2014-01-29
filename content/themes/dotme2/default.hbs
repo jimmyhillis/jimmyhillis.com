@@ -4,66 +4,63 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     {{! Page Meta }}
     <title>{{meta_title}}</title>
     <meta name="description" content="{{meta_description}}" />
-
     {{! Styles'n'Scripts }}
     <link rel="stylesheet" type="text/css" href="/assets/stylesheets/styles.css" />
-
     <link rel="shortcut icon", href="/assets/images/favicon.ico" />
     <link rel="apple-touch-icon-precomposed", href="/assets/images/apple-touch-icon-precomposed.png" />
     <link rel="apple-touch-icon-precomposed", sizes="72x72", href="/assets/images/apple-touch-icon-72x72-precomposed.png" />
     <link rel="apple-touch-icon-precomposed", sizes="114x114", href="/assets/images/apple-touch-icon-114x114-precomposed.png" />
     <link rel="apple-touch-icon-precomposed", sizes="144x144", href="/assets/images/apple-touch-icon-144x144-precomposed.png" />
-
     {{! Ghost outputs important style and meta data with this tag }}
     {{ghost_head}}
-
 </head>
 <body class="{{body_class}}">
-
     <header id="site-header">
-        <h1 id="site-title"><a href="/">{{@blog.title}}</a></h1>
-        {{!-- <small id="site-subtitle">{{@blog.description}}</small> --}}
-        <nav id="primary-navigation" class="site-navigation fixed-navigation clearfix">
-            <ul class="internal-content">
-                <li><a href="/" class="nav-link">blog</a></li>
-                <li><a href="/lab" class="nav-link">lab</a></li>
-                <li><a href="/music" class="nav-link">music</a></li>
-                <li><a href="/about" class="nav-link">about</a></li>
-            </ul>
-            <ul class="external-content">
-                <li>
-                    <a href="//twitter.com/ppjim3">
-                        <i class="fa fa-twitter"></i>
-                        <span>Twitter</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="//instagr.am/jimmyhillis">
-                        <i class="fa fa-instagram"></i>
-                        <span>Instagram</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="//github.com/jimmyhillis">
-                        <i class="fa fa-github"></i>
-                        <span>Github</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="//last.fm/user/ppjim3">
-                        <i class="fa fa-music"></i>
-                        <span>Last.fm</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <div class="inner-wrap">
+            <h1 id="site-title">
+                <a href="/">{{@blog.title}}</a>
+            </h1>
+            <nav id="primary-navigation" class="site-navigation fixed-navigation clearfix">
+                <ul class="internal-content">
+                    <li><a href="/" class="nav-link">blog</a></li>
+                    <li><a href="/lab" class="nav-link">lab</a></li>
+                    <li><a href="/music" class="nav-link">music</a></li>
+                    <li><a href="/about" class="nav-link">about</a></li>
+                </ul>
+                <ul class="external-content">
+                    <li>
+                        <a href="//twitter.com/ppjim3">
+                            <i class="fa fa-twitter"></i>
+                            <span>Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="//instagr.am/jimmyhillis">
+                            <i class="fa fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="//github.com/jimmyhillis">
+                            <i class="fa fa-github"></i>
+                            <span>Github</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="//last.fm/user/ppjim3">
+                            <i class="fa fa-music"></i>
+                            <span>Last.fm</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <div id="site-content">
+    <div id="site-content" class="inner-wrap">
 
         {{! Everything else gets inserted here }}
         {{{body}}}
@@ -71,9 +68,11 @@
     </div>
 
     <footer id="site-footer" class="clearfix">
-        <div class="colophon">
-            <p>
-
+        <div class="inner-wrap">
+            <p class="colophon">
+                This site was made by <a href="//twitter.com/ppjim3">jimmyhillis</a>
+                using <a href="//ghost.org">ghost</a>, <a href="//nodejs.com">nodejs</a>
+                and <a href="//sass-lang.com/">sass</a>.
             </p>
         </div>
     </footer>
