@@ -1,0 +1,12 @@
+{
+  "name": "jimmyhillis.me",
+  "version": "2.0.0",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.0.3"
+  },
+  "devDependencies": {}
+}
