@@ -33,7 +33,6 @@
  */
     @import 'mixins/predefined-mixins';
     @import 'mixins/custom-mixins';
-    @import 'mixins/grid';
 
 /**
  * Establish any resource using an @rule
@@ -78,7 +77,6 @@
  * that can exist anywhere in the site
  */
 
-
 /**
  * Set static page elements
  *
@@ -96,6 +94,5 @@
  * Rules unique to a specific template or set of templates.
  * These definitions should be set from a unique class
  */
-    // @import 'page-layouts/layout-template';
     @import 'page-layouts/layout-post';
 

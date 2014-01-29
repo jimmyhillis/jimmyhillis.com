@@ -8,9 +8,7 @@
  * Define variables, helper mixins and animations
  * local to this component
  */
-    // $sample-var: foo;
-    // @mixin sample-mixin($args:default){}
-    // @keyframes sample{}
+
 
 /**
  * Component classes
@@ -23,10 +21,10 @@
     left:0;
     height:40px;
     width:100%;
-    background:$blue url(/assets/images/geo-break2.jpg) bottom center;
+    border-bottom:solid 1px $blue;
     &,
     a{
-        color:$white;
+        color:$blue;
         text-decoration:none;
         line-height:40px;
     }
@@ -36,6 +34,7 @@
         margin:0 15px;
         float:left;
         font-size:1.3em;
+        font-weight:700;
     }
 
     .internal-content{
@@ -52,7 +51,7 @@
     .external-content{
         position:absolute;
         top:0;
-        right:20px;
+        right:$raw-gutter;
         padding-left:80px;
         a{
             margin-right:0.5em;
@@ -88,16 +87,11 @@
 /**
  * Modernizr hooks
  */
-    // .no-flexbox{}
 
 /**
  * Media queries
  */
-    // @media @tablet{}
-    // Set in settings.less
 
 /**
  * IE overrides
  */
-    //.lt-ie9{}
-    //.lt-ie8{}

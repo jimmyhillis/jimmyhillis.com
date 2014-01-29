@@ -13,9 +13,9 @@
  * $total-columns: number of grid columns;
  * $gutter:        column gutter (px);
  */
-    $raw-width:1000;
-    $total-columns:12;
-    $raw-gutter:20;
+    $raw-width:720px;
+    $total-columns:1;
+    $raw-gutter:10px;
 
 /**
  * Responsive breakpoints
@@ -25,7 +25,7 @@
             @media (max-width:2000px){ @content; }
         }
         @else if $point == tablet{
-            @media (max-width:1024px){ @content; }
+            @media (max-width:860){ @content; }
         }
         @else if $point == mobile{
             @media (max-width:600px){ @content; }
@@ -83,7 +83,7 @@
         $black:#333;
         $yellow:#fffb88;
         $red:#aa3025;
-        $blue:#60bddb;
+        $blue:#24c0eb;
         $grey:#737373;
         $lightgrey:#e0e0e0;
 

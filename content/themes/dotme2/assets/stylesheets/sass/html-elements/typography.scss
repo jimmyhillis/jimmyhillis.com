@@ -10,7 +10,7 @@
         font-size:(100/16)*$fontsize#{'%'};
         line-height:1.5em;
         @include font(default);
-        font-weight:300;
+        font-weight:400;
 	}
     p,li,dt,dd,input,textarea,button{
         line-height:1.5em;
@@ -23,7 +23,7 @@
         margin:1em 0 .5em;
         line-height:1.2em;
         font-family:'Source Sans Pro';
-        font-weight:200;
+        font-weight:700;
     }
         h1{
             font-size:3em;
