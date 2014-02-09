@@ -17,11 +17,29 @@
             </header>
             <section class="post-content">
                 {{content}}
-                <a class="full-post" href="{{url}}">
-                    <i class="fa fa-book"></i>
-                    Read {{title}}
-                </a>
             </section>
+            <footer class="post-footer">
+                <p>
+                    View the permalink for
+                    <a class="full-post" href="{{url}}">
+                        <i class="fa fa-book"></i>
+                        {{title}}
+                    </a>
+                    or share this post on
+                    <a href="http://twitter.com/share?text={{title}}&url={{url absolute="true"}}"
+                        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                        Twitter
+                    </a>,
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{url absolute="true"}}"
+                        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                        Facebook
+                    </a> or
+                    <a href="https://plus.google.com/share?url={{url absolute="true"}}"
+                       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                        Google+
+                    </a>
+                </p>
+            </footer>
         </article>
     {{/foreach}}
 </div>
