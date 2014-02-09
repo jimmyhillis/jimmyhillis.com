@@ -12,7 +12,6 @@
             margin-bottom:$raw-gutter;
             padding:0 $raw-gutter $raw-gutter 0;
             border-bottom:solid 1px $blue;
-            text-align:center;
             color:$blue;
         }
             .post-title{
@@ -20,7 +19,6 @@
                     text-decoration:none;
                 }
                 line-height:1;
-                margin-bottom:$raw-gutter;
             }
 
             .post-meta{
@@ -35,6 +33,7 @@
                 }
                 img{
                     max-width:100%;
+                    margin:$raw-gutter 0;
                     border-radius:2px;
                 }
             }

@@ -3,7 +3,7 @@
 {{! The comment above "< default" means - insert everything in this file into
     the {body} of the default.hbs template, which contains our header/footer. }}
 
-<main class="content" role="main">
+<main class="content content-post" role="main">
 
     <article class="{{post_class}}">
 
@@ -17,7 +17,8 @@
                 <span class="post-meta">
                     Posted on
                     <time datetime="{{date format="YYYY-MM-DD"}}">{{date format='DD MMMM YYYY'}}</time>
-                    {{#if tags}} about {{tags separator=", "}}{{/if}}</span>
+                    {{#if tags}} about {{tags separator=", "}}{{/if}}
+                </span>
             </header>
 
             <section class="post-content">
