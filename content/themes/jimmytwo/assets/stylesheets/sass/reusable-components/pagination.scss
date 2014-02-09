@@ -1,0 +1,39 @@
+/**
+* Pagination
+*
+* Style the next/previous style pagination for moving between
+* post listing pages.
+*/
+
+.pagination{
+    position:relative;
+    width:100%;
+    height:40px;
+    line-height:40px;
+}
+
+    .pagination-link{
+        box-sizing:border-box;
+        width:50%;
+        font-size:1.3em;
+        &:hover{
+            text-decoration:none;
+        }
+    }
+
+    .pagination-newer{
+        float:right;
+        padding-left:$raw-gutter*2;
+        text-align:right;
+        i{
+            margin-left:$raw-gutter;
+        }
+    }
+    .pagination-older{
+        float:left;
+        padding-right:$raw-gutter*2;
+        text-align:left;
+        i{
+            margin-right:$raw-gutter;
+        }
+    }

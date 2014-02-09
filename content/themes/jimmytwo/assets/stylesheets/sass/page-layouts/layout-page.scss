@@ -1,0 +1,34 @@
+/**
+ * Page layout
+ */
+
+    .content-page{
+        box-sizing:border-box;
+        margin-top:100px;
+    }
+
+        .page-header{
+            margin-bottom:$raw-gutter;
+            padding:0 $raw-gutter $raw-gutter 0;
+            border-bottom:solid 1px $blue;
+            color:$blue;
+        }
+            .page-title{
+                a{
+                    text-decoration:none;
+                }
+                line-height:1;
+            }
+
+            .post-content{
+                img{
+                    max-width:100%;
+                    margin:$raw-gutter 0;
+                    border-radius:2px;
+                }
+            }
+
+            .post-content,
+            .post-footer{
+                margin:0 auto;
+            }
