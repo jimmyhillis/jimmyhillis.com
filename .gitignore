@@ -1,12 +1,13 @@
 .DS_Store
 *.sublime-*
 node_modules/
+.sass-cache/
+
+# compiled assets
+styles.css
 
 # ghost core
-core/
-
-content/
-!content/themes/dotme2/
-!content/themes/plugins/
-Gruntfile.js
-index.js
+/core/
+/content/data
+/content/images/
+/content/

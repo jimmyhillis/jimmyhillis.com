@@ -1,0 +1,14 @@
+<nav class="pagination" role="navigation">
+    {{#if prev}}
+        <a class="pagination-link pagination-newer" href="{{pageUrl prev}}">
+            Newer
+            <i class="fa fa-arrow-right"></i>
+        </a>
+    {{/if}}
+    {{#if next}}
+        <a class="pagination-link pagination-older" href="{{pageUrl next}}">
+            <i class="fa fa-arrow-left"></i>
+            Older
+        </a>
+    {{/if}}
+</nav>

@@ -1,31 +1,28 @@
 {{!< default}}
 
 <div class="posts clearfix">
-
     {{! Each post will be output using this markup }}
     {{#foreach posts}}
-
-    <article class="{{post_class}}">
-        <header class="post-header clearfix">
-            <h1 class="post-title">
-                <a href="/">{{{title}}}</a>
-            </h1>
-            <span class="post-meta">
-                Posted on <time datetime="{{date format='YYYY-MM-DD'}}">{{date format="DD MMMM YYYY"}}</time>
-                {{#if tags}}
-                    about {{tags}}
-                {{/if}}
-            </span>
-        </header>
-        <section class="post-content">
-            {{content}}
-            <a class="full-post" href="{{url}}">
-                <i class="fa fa-book"></i>
-                Read {{title}}
-            </a>
-        </section>
-    </article>
-
+        <article class="{{post_class}}">
+            <header class="post-header clearfix">
+                <h1 class="post-title">
+                    <a href="{{url}}">{{{title}}}</a>
+                </h1>
+                <span class="post-meta">
+                    Posted on <time datetime="{{date format='YYYY-MM-DD'}}">{{date format="DD MMMM YYYY"}}</time>
+                    {{#if tags}}
+                        about {{tags}}
+                    {{/if}}
+                </span>
+            </header>
+            <section class="post-content">
+                {{content}}
+                <a class="full-post" href="{{url}}">
+                    <i class="fa fa-book"></i>
+                    Read {{title}}
+                </a>
+            </section>
+        </article>
     {{/foreach}}
 </div>
 

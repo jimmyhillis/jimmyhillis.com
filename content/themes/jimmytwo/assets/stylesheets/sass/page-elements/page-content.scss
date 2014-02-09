@@ -19,23 +19,18 @@
 #site-content{
     box-sizing:border-box;
     width:100%;
-    margin:60px auto;
+    margin:60px auto $raw-gutter auto;
     background:$white;
 }
 
 /**
  * Modernizr hooks
  */
-    // .no-flexbox{}
 
 /**
  * Media queries
  */
-    // @media @tablet{}
-    // Set in settings.less
 
 /**
  * IE overrides
  */
-    //.lt-ie9{}
-    //.lt-ie8{}
