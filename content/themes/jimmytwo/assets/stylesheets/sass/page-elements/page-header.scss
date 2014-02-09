@@ -83,6 +83,14 @@
 /**
  * Media queries
  */
+     @include breakpoint(mobile){
+        #site-title{
+            margin-left:$raw-gutter;
+        }
+        .external-content{
+            display:none;
+        }
+    }
 
 /**
  * IE overrides

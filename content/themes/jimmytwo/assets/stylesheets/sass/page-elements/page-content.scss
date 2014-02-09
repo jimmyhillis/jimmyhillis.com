@@ -20,6 +20,7 @@
     box-sizing:border-box;
     width:100%;
     margin:100px auto $raw-gutter auto;
+    padding:0 $raw-gutter;
     background:$white;
 }
 
@@ -30,6 +31,11 @@
 /**
  * Media queries
  */
+     @include breakpoint(mobile){
+        #site-content{
+            margin-top:60px;
+        }
+    }
 
 /**
  * IE overrides
