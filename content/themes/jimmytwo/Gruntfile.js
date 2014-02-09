@@ -141,7 +141,8 @@ module.exports = function (grunt) {
         'clean',
         'compass:development',
         'autoprefixer:development',
-        'cmq:combine',
+        // 'cmq:combine',
+        'cssmin',
         'jshint'
     ]);
 
