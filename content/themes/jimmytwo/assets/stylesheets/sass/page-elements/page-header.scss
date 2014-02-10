@@ -44,6 +44,9 @@
             float:left;
             margin-right:$raw-gutter;
         }
+            li:last-child .nav-link{
+                margin-right:0;
+            }
     }
 
     // External link gallery
@@ -87,9 +90,6 @@
  * Media queries
  */
      @include breakpoint(mobile){
-        #site-title{
-            margin-left:$raw-gutter;
-        }
         .external-content{
             display:none;
         }
