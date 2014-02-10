@@ -21,10 +21,10 @@
     samp,
     kbd{
     	display:inline-block;
-    	padding:0 0.5em;
         font-family:$monospace;
         font-weight:200;
-        font-size:0.8em;
+        font-size:0.9em;
+        line-height:1.66666666667em;
         border-bottom:solid 1px $lightgrey;
     }
 

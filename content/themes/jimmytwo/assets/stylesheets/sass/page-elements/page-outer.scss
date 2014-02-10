@@ -14,8 +14,10 @@
  */
 
 .inner-wrap{
+    box-sizing:border-box;
     max-width:$raw-width;
     margin:0 auto;
+    padding:0 $raw-gutter;
     position:relative;
 }
 

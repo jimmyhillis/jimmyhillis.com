@@ -30,16 +30,19 @@
 }
 
     #site-title{
-        margin:0 $raw-gutter 0 0 ;
+        margin:0 $raw-gutter*2 0 0;
         float:left;
         font-size:1.3em;
         font-weight:700;
+        a:hover{
+            text-decoration:none;
+        }
     }
 
     .internal-content{
         .nav-link{
             float:left;
-            margin-right:1em;
+            margin-right:$raw-gutter;
         }
     }
 
