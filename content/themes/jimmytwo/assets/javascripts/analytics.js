@@ -1,8 +1,7 @@
 var Tracker = (function () {
 
     var Tracker = function (options) {
-        // this.ga = ga;
-        option = options || {};
+        options = options || {};
         this.debug = options.debug || false;
         this.timeout = options.timeout || 600;
         return this;
