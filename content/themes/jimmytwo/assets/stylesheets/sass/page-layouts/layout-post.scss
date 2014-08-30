@@ -9,8 +9,7 @@
 
         .post-header{
             margin-bottom:$raw-gutter;
-            padding:0 $raw-gutter $raw-gutter 0;
-            border-bottom:solid 1px $blue;
+            padding:0 $raw-gutter ($raw-gutter * 2) 0;
             color:$blue;
         }
             .post-title{
@@ -18,9 +17,12 @@
                     text-decoration:none;
                 }
                 line-height:1em;
+                margin-bottom:0.25em;
             }
 
             .post-meta{
+                padding-left:1em;
+                border-left:solid 1px $grey;
                 font-size:0.9em;
                 color:$grey;
             }
@@ -73,7 +75,6 @@
     .post-title{
         margin-top:0;
     }
-
     .post{
         margin-bottom:60px;
     }
@@ -86,7 +87,7 @@
 /**
  * Media queries
  */
-     @include breakpoint(mobile){
+     @include breakpoint(mobile) {
         .post-title{
             font-size:2.5em;
         }
